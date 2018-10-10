@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>API Capstone - Wireframes</title>
+</head>
+<body>
+    <h1>Gonna Jet</h1>
+    <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
+    <form id="place-search">
+        <label for="city">Destination City (optional)</label>
+        <input name="city" type="text" placeholder="e.g Paris">
+        <label for="country">Destination Country (required)</label>
+        <input name="country" type="text" placeholder="e.g. France" required>
+        <label for="origin-country">Origin Country if not United States</label>
+        <input name="origin-country" type="text" placeholder="e.g. Canada" required>
+        <input type="submit" value="Let's go!">
+    </form>
+    <!-- results scenario -->
+    <div class="results">
+        <section class="time-zone">
+            <h2>Current Time at Destination</h2>
+            <p>12:55PM</p>
+        </section>
+        <section class="weather">
+            <h2>Weather</h2>
+            <p>Today: 85 &#8457 | 30 &#8451<br>
+                This week: 85 &#8457 | 30 &#8451</p>
+            <h3>Pack weather appropriate attire:</h3>
+            <ul class="to-pack">
+                <li>t-shirts</li>
+                <li>shorts</li>
+                <li>flip flops</li>
+                <li>sunglasses</li>
+                <li>sunscreen</li>
+                <li>mosquito spray</li>
+            </ul>
+        </section>
+        <section class="currency">
+            <h2>Currency Conversion</h2>
+            <p>Dollars to Pounds: 1 Dollar = 0.76 Sterling Pound</p>
+            <h3>Equivalent price of a Starbucks coffee</h3>
+            <p>US: 1.75 Dollars | UK: 2.75 Pounds</p>
+        </section>
+        <section class="airbnb-price">
+            <h2>Price of a one bed Airbnb</h2>
+            <p>Average price: $200/night<br>
+                Price Range: $75/night to $300/night</p>
+        </section>
+        <section class="travel-tips">
+            <h2>Watch some travel tips</h2>
+            <p>Youtube video</p>
+            <p>Youtube video</p>
+            <p>Youtube video</p>
+            <p>Youtube video</p>
+            <p>Youtube video</p>
+        </section>
+    </div>
+    <!-- error scenario -->
+    <section class="error-msg">
+        <h2>Sorry. Place was not found. Try checking your spelling or just search by destination country.</h2>
+    </section>
+</body>
+</html>
