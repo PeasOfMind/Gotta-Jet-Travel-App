@@ -1,0 +1,1 @@
+Enter in a destination and get some info to help you plan and prepare!
