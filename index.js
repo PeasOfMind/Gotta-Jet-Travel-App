@@ -7,7 +7,7 @@ const CLIMA_BASE_URL = 'https://api2.climacell.co/v2';
 
 const GEO_BASE_URL = 'https://us1.locationiq.com/v1/search.php'
 
-const geocodeKEY = `1a0665710b35a7`;
+const geocodeKEY = `pk.d192d95e312fef7e3b96dd5355e86c12`;
 
 //TODO: convert user input into geocode (longitude and latitude WGS 84). Need the google geocode API
 
