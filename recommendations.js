@@ -21,61 +21,56 @@ function formatQueryParams(params){
     return queryItems.join('&');
 }
 
-//convert celcius to farenheit
-function cToF(cTemp){
-    return (cTemp * 9/5)+32;
+function renderPlaceResult(placeResult){
+    return `<div class='venue-result'>
+        <h3>${placeResult.venue.name}</h3>
+        <h4>Category: ${placeResult.venue.categories[0].name}</h4>
+        <p>${placeResult.venue.location.formattedAddress.join("<br>")}</p>
+    </div>`
 }
 
-//TODO: display 5 or 6 days weather results (excluding today): min, max, probability of precipitation
-function displayResults(weatherJson){
-    //display weather results
-    const results = weatherJson.data[0];
-    const weatherHTML = `
-    <h2>Weather</h2>
-    <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/${results.weather.icon
-    }.png" alt="weather icon: ${results.weather.description}">
-    <ul id="weather-results">
-    <li>Right Now: ${cToF(results.temp)} &#8457 | ${results.temp} &#8451</li>
-    <li>Feels Like:  ${cToF(results.app_temp)} &#8457 | ${results.app_temp} &#8451</li>
-    <li>Humidity: ${results.rh}%</li>
-    </ul>`
-    $('#js-weather').empty();
-    $('#js-weather').html(weatherHTML);
+function displayRecResults(recommendsJson){
+    //display recommended places from foursquare
+    const results = recommendsJson.response.groups[0];
+    const resultsHTML = results.items.map(item => renderPlaceResult(item)).join("\n");
+    const recommendHTML = `<h2>${results.type}</h2>
+    ${resultsHTML}
+    <p>Powered by Foursquare</p>`;
+    $('#js-recommend-places').empty();
+    $('#js-recommend-places').html(recommendHTML);
     $('#js-results').prop('hidden', false);
 }
 
-/*TODO: add a packing list:
-max UV from week's forecast = bring sunglasses, hat, sunscreen
-max Temp >80 = bring shorts and tees, flip flops or sandals
-min Temp <35 = bring winter coat, boots, winter accessories (mitts, gloves, scarves, beanies)
-pop (probability of precipitation) > 50% any day = bring umbrella, rainboots
-*/
-
-//searches weather locations closest to the specified lat longcommon
-function getWeather(locationJson){
-    //gets the latitude and longitude (rounded)
+function getRecommendations(locationJson){
     const latitude = Math.round(locationJson[0].lat * 100)/100;
     const longitude = Math.round(locationJson[0].lon * 100)/100;
-    const weatherParams = {
-        key: weatherbitKey,
-        lat: latitude,
-        lon: longitude
+    const recParams = {
+        client_id: 'MHT31R5PBOCZ4WEQLEQTRO5A42NLUQEEY1HA2SAZUTRIWJBI',
+        client_secret: 'JB4HKNXIGKFPGE23JQVFAMOGLSUVHNKSCNKCU3M3Z33RVWVI',
+        ll: `${latitude},${longitude}`,
+        section: 'topPicks',
+        v: '20190112',
+        limit: 10,
+        time: 'any',
+        day: 'any'
     }
-    const weatherQuery = formatQueryParams(weatherParams);
-    const weatherUrl = WEATHER_BASE_URL + '?' + weatherQuery;
-    //call to weatherbit location API
-    fetch(weatherUrl)
+    const recQuery = formatQueryParams(recParams);
+    const recUrl = FOUR_BASE_URL + '?' + recQuery;
+    console.log(recUrl);
+    //call to foursquare API
+    fetch(recUrl)
     .then(response => {
         if (response.ok) return response.json();
         throw new Error (response.statusText);
     })
-    .then(weatherJson => displayResults(weatherJson))
+    .then(recommendsJson => displayRecResults(recommendsJson))
     .catch(err => {
         //Bad case: display error message, hide results section
         $('#js-error-msg').text(`Something went wrong: ${err.message}`);
         $('#js-results').prop('hidden', true);
         $('#js-error-msg').prop('hidden', false);
     });
+
 }
 
 //get the latitude and longitude of the specified destination
@@ -94,7 +89,7 @@ function getLatLon(cityQuery, countryQuery){
         if (response.ok) return response.json();
         throw new Error (response.statusText);
     })
-    .then(locationJson => getWeather(locationJson))
+    .then(locationJson => getRecommendations(locationJson))
     .catch(err => {
         //Bad case: display error message, hide results section
         $('#js-error-msg').text(`Something went wrong: ${err.message}`);

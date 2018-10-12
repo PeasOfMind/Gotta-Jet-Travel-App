@@ -14,7 +14,7 @@ function formatQueryParams(params){
 }
 
 //puts each result into html string format
-function renderResults(result){
+function renderResult(result){
     return `<div class="search-result">
     <h3 class="result-title">${result.snippet.title}</h3>
     <input type="image" class="trigger" id="${result.id.videoId}" aria-label="Open Video in Lightbox: ${result.snippet.title}"
@@ -25,7 +25,7 @@ function renderResults(result){
 function displayYoutubeResults(videoJson){
     //HTML string array containing the results of the search
     console.log(videoJson);
-    const resultsHTML = videoJson.items.map(item => renderResults(item)).join("\n");
+    const resultsHTML = videoJson.items.map(item => renderResult(item)).join("\n");
     //put into HTML
     $('#js-video-tips').empty();
     $('#js-video-tips').html('<h2>Watch some travel tips</h2>');

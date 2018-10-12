@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gonna Jet - Weather Feature</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Gonna Jet</h1>
+        <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
+        <form id="place-search" class="js-form">
+            <label for="city">Destination City (optional)</label>
+            <input name="city" type="text" id="js-city" placeholder="e.g Paris">
+            <label for="country">Destination Country (required)</label>
+            <input name="country" type="text" id="js-country" placeholder="e.g. France" required>
+            <label for="origin-country">Origin Country if not United States</label>
+            <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
+            <input type="submit" value="Let's go!">
+        </form>
+    </header>
+    <main>
+        <!-- results scenario -->
+        <div id="js-results" hidden>
+            <section class="recommended-places" id="js-recommend-places">
+                <h2>Recommended Places</h2>
+                <div class='venue-result'>
+                    <h3>The Trappist</h3>
+                    <h4>Beer Bar</h4>
+                    <p>460 8th Street, Oakland, CA</p>
+                </div>
+                <div class='venue-result'>
+                        <h3>The Trappist</h3>
+                        <h4>Beer Bar</h4>
+                        <p>460 8th Street, Oakland, CA</p>
+                    </div>
+                <p>Powered by Foursquare</p>
+            </section>
+        </div>
+        <!-- error scenario -->
+        <section class="error-msg" id="js-error-msg" hidden>
+            <h2>Sorry. Place was not found. Try checking your spelling or just search by destination country.</h2>
+        </section>
+    </main>
+    <script src="codes.js"></script>
+    <script src="currencyCodes.js"></script>
+    <script src="index.js"></script>
+    <script src="recommendations.js"></script>
+</body>
+</html>

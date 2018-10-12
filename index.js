@@ -14,6 +14,13 @@ const geocodeKey = `pk.d192d95e312fef7e3b96dd5355e86c12`;
 //Currency API
 const XCHANGE_BASE_URL = 'https://api.exchangeratesapi.io/latest';
 
+//Foursquare API
+const FOUR_BASE_URL = 'https://api.foursquare.com/v2/venues/explore';
+
+const idKey = 'MHT31R5PBOCZ4WEQLEQTRO5A42NLUQEEY1HA2SAZUTRIWJBI';
+const secretKey ='JB4HKNXIGKFPGE23JQVFAMOGLSUVHNKSCNKCU3M3Z33RVWVI';
+
+//Youtube API
 const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 const youtubeKey = 'AIzaSyDOszIaG1Ao6Yf66WAw2n83SUma7jnzRRA';
