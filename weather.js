@@ -21,18 +21,49 @@ function formatQueryParams(params){
     return queryItems.join('&');
 }
 
-function displayResults(weatherJson){
-    //find weather report with highest predictability
-    const bestMatch = weatherJson.consolidated_weather.reduce((preVal, currVal) => Math.max(preVal.predictability, currVal.predictability));
-    console.log(bestMatch);
+//convert celcius to farenheit
+function cToF(cTemp){
+    return (cTemp * 9/5)+32;
 }
 
+//TODO: display 5 or 6 days weather results (excluding today): min, max, probability of precipitation
+function displayResults(weatherJson){
+    //display weather results
+    const results = weatherJson.data[0]
+    const weatherHTML = `
+    <h2>Weather</h2>
+    <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/${results.weather.icon
+    }.png" alt="weather icon: ${results.weather.description}">
+    <ul id="weather-results">
+    <li>Right Now: ${cToF(results.temp)} &#8457 | ${results.temp} &#8451</li>
+    <li>Feels Like:  ${cToF(results.app_temp)} &#8457 | ${results.app_temp} &#8451</li>
+    <li>Humidity: ${results.rh}%</li>
+    </ul>`
+    $('#js-weather').empty();
+    $('#js-weather').html(weatherHTML);
+    $('#js-results').prop('hidden', false);
+}
+
+/*TODO: add a packing list:
+max UV from week's forecast = bring sunglasses, hat, sunscreen
+max Temp >80 = bring shorts and tees, flip flops or sandals
+min Temp <35 = bring winter coat, boots, winter accessories (mitts, gloves, scarves, beanies)
+pop (probability of precipitation) > 50% any day = bring umbrella, rainboots
+*/
+
+//searches weather locations closest to the specified lat longcommon
 function getWeather(locationJson){
     //gets the latitude and longitude (rounded)
     const latitude = Math.round(locationJson[0].lat * 100)/100;
     const longitude = Math.round(locationJson[0].lon * 100)/100;
-    const weatherUrl = `${META_BASE_URL}?lattlong=${latitude},${longitude}`;
-    //call to metaweather API
+    const weatherParams = {
+        key: weatherbitKey,
+        lat: latitude,
+        lon: longitude
+    }
+    const weatherQuery = formatQueryParams(weatherParams);
+    const weatherUrl = WEATHER_BASE_URL + '?' + weatherQuery;
+    //call to weatherbit location API
     fetch(weatherUrl)
     .then(response => {
         if (response.ok) return response.json();
@@ -47,16 +78,17 @@ function getWeather(locationJson){
     });
 }
 
+//get the latitude and longitude of the specified destination
 function getLatLon(cityQuery, countryQuery){
     const locationParams = {
-        key: geocodeKEY,
+        key: geocodeKey,
         city: cityQuery,
         country: countryQuery,
         format: 'json'
     };
     const queryString = formatQueryParams(locationParams);
     const locationUrl = GEO_BASE_URL + '?' + queryString;
-    //call to locationIQ API
+    //call to locationIQ geocoding API
     fetch(locationUrl)
     .then(response => {
         if (response.ok) return response.json();
