@@ -1,5 +1,5 @@
-//Weather API (climacell)
-const CLIMA_BASE_URL = 'https://api2.climacell.co/v2';
+//Weather API (metaweather)
+const META_BASE_URL = 'https://www.metaweather.com/api/location/search';
 
 // const climaKey //add api key here (use on 'apikey' header parameter)
 
@@ -15,6 +15,7 @@ const geocodeKEY = `pk.d192d95e312fef7e3b96dd5355e86c12`;
 const XCHANGE_BASE_URL = 'https://api.exchangeratesapi.io/latest';
 //need to add "?symbols=USD,[insert destination currency]" to endpoint URL
 
+//TODO: Add source credits for all apis
 
 //TODO - future: add autocomplete dropdown feature
 //TODO - future: test for edge cases for countries (e.g. GB vs. UK vs. England vs. Britain)

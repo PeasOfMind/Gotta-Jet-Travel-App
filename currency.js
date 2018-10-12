@@ -9,6 +9,8 @@ function toTitleCase(str){
 function convertToCurrency(country){
     //finds index of element in the countriesArray containing the user input country
     const countryIdx = countriesArray.findIndex(element => element.name.common === country);
+    //TODO: generate error if country isn't found in countriesArray
+    //TODO: account for alternative names
     //get currency code
     return countriesArray[countryIdx].currency[0];
 
