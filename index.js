@@ -1,7 +1,7 @@
 //Weather API (climacell)
 const CLIMA_BASE_URL = 'https://api2.climacell.co/v2';
 
-const climaKey //add api key here (use on 'apikey' header parameter)
+// const climaKey //add api key here (use on 'apikey' header parameter)
 
 //Geocoding API (LocationIQ)
 
@@ -13,4 +13,8 @@ const geocodeKEY = `1a0665710b35a7`;
 
 //Currency API
 const XCHANGE_BASE_URL = 'https://api.exchangeratesapi.io/latest';
-//need to add "?base=USD" to endpoint URL
+//need to add "?symbols=USD,[insert destination currency]" to endpoint URL
+
+
+//TODO - future: add autocomplete dropdown feature
+//TODO - future: test for edge cases for countries (e.g. GB vs. UK vs. England vs. Britain)
