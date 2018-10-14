@@ -302,7 +302,7 @@ function languages(countryIdx){
         if(idx === langArray.length-1) langToLearn += `and/or ${language}.`;
         else langToLearn += `${language}, `;
     });
-    $('#js-language').append(`<h2>${langToLearn}</h2>`);
+    $('#js-language').html(`<h2>${langToLearn}</h2>`);
 }
 
 function generateErr(query){
