@@ -138,7 +138,7 @@ function displayRecResults(recommendsJson){
     //display recommended places from foursquare
     const results = recommendsJson.response.groups[0];
     const resultsHTML = results.items.map(item => renderPlaceResult(item)).join("\n");
-    const recommendHTML = `<h2>${results.type}</h2>
+    const recommendHTML = `<h2>${results.type} around ${recommendsJson.response.headerFullLocation}</h2>
     ${resultsHTML}
     <p>Powered by Foursquare</p>`;
     $('#js-recommend-places').empty();
