@@ -40,8 +40,16 @@ function toTitleCase(str){
 
 function getCountryIdx(country){
     //finds index of element in the countriesArray containing the user input country
-    return countriesArray.findIndex(element => element.name.common === country);
-        
+    if(country.length <= 3) country = country.toUpperCase();
+    else country = toTitleCase(country);
+    let countryIdx = countriesArray.findIndex(element => element.name.common === country);
+
+    //if country isn't found by the common name, check alt spellings
+    if (countryIdx === -1) {
+        countryIdx = countriesArray.findIndex(element => element.altSpellings.includes(country));
+    }
+
+    return countryIdx;
     //TODO: generate error if country isn't found in countriesArray
     //TODO: account for alternative names
 }
@@ -284,16 +292,38 @@ function getXchangeRate(toCurrency, fromCurrency = 'USD'){
     });
 }
 
+function languages(countryIdx){
+    const langArray = Object.values(countriesArray[countryIdx].languages);
+    let langToLearn = 'Time to brush up on your '
+    if (langArray.includes('English')) langToLearn = "You'll get by just fine with English";
+    else if (langArray.length === 1) langToLearn += `${langArray[0]}.`
+    else if (langArray.length === 2) langToLearn += `${langArray[0]} and/or ${langArray[1]}.`;
+    else langArray.forEach(function(language, idx){
+        if(idx === langArray.length-1) langToLearn += `and/or ${language}.`;
+        else langToLearn += `${language}, `;
+    });
+    $('#js-language').append(`<h2>${langToLearn}</h2>`);
+}
+
+function generateErr(query){
+    $('#js-error-msg').html(`<h2>Sorry, ${query} not found. Try checking your spelling or simplifying your search.</h2>`)
+    $('#js-results').prop('hidden', true);
+    $('#js-error-msg').prop('hidden', false);
+}
+
 function watchSubmit(){
     $('.js-form').submit( event => {
         event.preventDefault();
 
         //get user input for destination city and country
         let cityQuery = $('#js-city').val().toLowerCase();
-        const countryQuery = toTitleCase($('#js-country').val());
-        const originCountry = toTitleCase($('#js-origin').val());
+        const countryQuery = ($('#js-country').val());
+        const originCountry = ($('#js-origin').val());
 
         const countryIdx = getCountryIdx(countryQuery);
+
+        //show error to user if country can't be found
+        if (countryIdx === -1) generateErr(countryQuery);
 
         //if the user didn't enter a city, make it the capital of the country
         //also call the video tips with the country
@@ -307,12 +337,23 @@ function watchSubmit(){
 
         //get currency code of destination country
         const currencyCode = convertToCurrency(countryIdx);
-        //if the user entered a origin country, get the currency code for that too
+
+        //set default origin country to US
+        let originCountryIdx = getCountryIdx('United States');
+
+        //if the user entered a origin country, get the currency code for that instead
         if (originCountry) {
-            const originCountryIdx = getCountryIdx(originCountry);
+            originCountryIdx = getCountryIdx(originCountry);
+
+            //show error to user if country can't be found
+            if (originCountryIdx === -1) generateErr(originCountry);
+
             const originCurrencyCode = convertToCurrency(originCountryIdx);
             getXchangeRate(currencyCode, originCurrencyCode);
         } else getXchangeRate(currencyCode);
+
+        //Tell user what language(s) to learn
+        languages(countryIdx);
     });
 }
 
