@@ -5,25 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gonna Jet - API Capstone</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <h1>Gonna Jet</h1>
         <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
-        <form id="place-search">
+        <form id="place-search" class="js-form">
             <label for="city">Destination City (optional)</label>
-            <input name="city" type="text" placeholder="e.g Paris">
+            <input name="city" type="text" id="js-city" placeholder="e.g Paris">
             <label for="country">Destination Country (required)</label>
-            <input name="country" type="text" placeholder="e.g. France" required>
+            <input name="country" type="text" id="js-country" placeholder="e.g. France" required>
             <label for="origin-country">Origin Country if not United States</label>
-            <input name="origin-country" type="text" placeholder="e.g. Canada" required>
+            <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
             <input type="submit" value="Let's go!">
         </form>
     </header>
     <main>
         <!-- results scenario -->
-        <div class="js-results" hidden>
-            <section class="time-zone">
+        <div id="js-results" hidden>
+            <!-- <section class="time-zone">
                 <h2>Current Time at Destination</h2>
                 <p>12:55PM</p>
             </section>
@@ -40,14 +43,10 @@
                     <li>sunscreen</li>
                     <li>mosquito spray</li>
                 </ul>
+            </section> -->
+            <section class="currency" id="js-currency">
             </section>
-            <section class="currency">
-                <h2>Currency Conversion</h2>
-                <p>Dollars to Pounds: 1 Dollar = 0.76 Sterling Pound</p>
-                <h3>Equivalent price of a Starbucks coffee</h3>
-                <p>US: 1.75 Dollars | UK: 2.75 Pounds</p>
-            </section>
-            <section class="recommended-places">
+            <!-- <section class="recommended-places">
                 <h2>Recommended Places</h2>
                 <div class='venue-result'>
                     <h3>The Trappist</h3>
@@ -68,13 +67,15 @@
                 <p>Youtube video</p>
                 <p>Youtube video</p>
                 <p>Youtube video</p>
-            </section>
+            </section> -->
         </div>
         <!-- error scenario -->
-        <section class="error-msg" hidden>
+        <section class="error-msg" id="js-error-msg" hidden>
             <h2>Sorry. Place was not found. Try checking your spelling or just search by destination country.</h2>
         </section>
     </main>
+    <script src="codes.js"></script>
+    <script src="currencyCodes.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
