@@ -71,6 +71,56 @@ function cToF(cTemp){
     return (cTemp * 9/5)+32;
 }
 
+function renderPlaceResult(placeResult){
+    return `<div class='venue-result'>
+        <h3>${placeResult.venue.name}</h3>
+        <h4>Category: ${placeResult.venue.categories[0].name}</h4>
+        <p>${placeResult.venue.location.formattedAddress.join("<br>")}</p>
+    </div>`
+}
+
+function displayRecResults(recommendsJson){
+    //display recommended places from foursquare
+    const results = recommendsJson.response.groups[0];
+    const resultsHTML = results.items.map(item => renderPlaceResult(item)).join("\n");
+    const recommendHTML = `<h2>${results.type}</h2>
+    ${resultsHTML}
+    <p>Powered by Foursquare</p>`;
+    $('#js-recommend-places').empty();
+    $('#js-recommend-places').html(recommendHTML);
+    $('#js-results').prop('hidden', false);
+}
+
+function getRecommendations(latitude, longitude){
+    const recParams = {
+        client_id: 'MHT31R5PBOCZ4WEQLEQTRO5A42NLUQEEY1HA2SAZUTRIWJBI',
+        client_secret: 'JB4HKNXIGKFPGE23JQVFAMOGLSUVHNKSCNKCU3M3Z33RVWVI',
+        ll: `${latitude},${longitude}`,
+        section: 'topPicks',
+        v: '20190112',
+        limit: 5,
+        time: 'any',
+        day: 'any'
+    }
+    const recQuery = formatQueryParams(recParams);
+    const recUrl = FOUR_BASE_URL + '?' + recQuery;
+    console.log(recUrl);
+    //call to foursquare API
+    fetch(recUrl)
+    .then(response => {
+        if (response.ok) return response.json();
+        throw new Error (response.statusText);
+    })
+    .then(recommendsJson => displayRecResults(recommendsJson))
+    .catch(err => {
+        //Bad case: display error message, hide results section
+        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
+        $('#js-results').prop('hidden', true);
+        $('#js-error-msg').prop('hidden', false);
+    });
+
+}
+
 //TODO: display 5 or 6 days weather results (excluding today): min, max, probability of precipitation
 function displayWeatherResults(weatherJson){
     //display weather results
@@ -96,11 +146,7 @@ min Temp <35 = bring winter coat, boots, winter accessories (mitts, gloves, scar
 pop (probability of precipitation) > 50% any day = bring umbrella, rainboots
 */
 
-//searches weather locations closest to the specified lat longcommon
-function getWeather(locationJson){
-    //gets the latitude and longitude (rounded)
-    const latitude = Math.round(locationJson[0].lat * 100)/100;
-    const longitude = Math.round(locationJson[0].lon * 100)/100;
+function getWeather(latitude, longitude){
     const weatherParams = {
         key: weatherbitKey,
         lat: latitude,
@@ -123,6 +169,15 @@ function getWeather(locationJson){
     });
 }
 
+function formatLatLon(locationJson){
+    //gets the latitude and longitude (rounded)
+    const latitude = Math.round(locationJson[0].lat * 100)/100;
+    const longitude = Math.round(locationJson[0].lon * 100)/100;
+    //call the weather and foursquare recommendations APIs
+    getWeather(latitude, longitude);
+    getRecommendations(latitude, longitude);
+}
+
 //get the latitude and longitude of the specified destination
 function getLatLon(cityQuery, countryQuery){
     const locationParams = {
@@ -139,7 +194,7 @@ function getLatLon(cityQuery, countryQuery){
         if (response.ok) return response.json();
         throw new Error (response.statusText);
     })
-    .then(locationJson => getWeather(locationJson))
+    .then(locationJson => formatLatLon(locationJson))
     .catch(err => {
         //Bad case: display error message, hide results section
         $('#js-error-msg').text(`Something went wrong: ${err.message}`);
