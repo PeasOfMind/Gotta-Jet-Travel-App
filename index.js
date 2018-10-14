@@ -71,6 +71,53 @@ function cToF(cTemp){
     return (cTemp * 9/5)+32;
 }
 
+//VIDEO RESULTS//
+
+//puts each result into html string format
+function renderVideoResult(result){
+    return `<div class="search-result">
+    <h3 class="result-title">${result.snippet.title}</h3>
+    <input type="image" class="trigger" id="${result.id.videoId}" aria-label="Open Video in Lightbox: ${result.snippet.title}"
+    src="${result.snippet.thumbnails.medium.url}" alt="${result.snippet.title}">
+</div>`
+}
+
+function displayYoutubeResults(videoJson){
+    //HTML string array containing the results of the search
+    const resultsHTML = videoJson.items.map(item => renderVideoResult(item)).join("\n");
+    //put into HTML
+    $('#js-video-tips').empty();
+    $('#js-video-tips').html('<h2>Watch some travel tips</h2>');
+    $('#js-video-tips').append(resultsHTML);
+    $('#js-results').prop('hidden', false);
+}
+
+function getVideos(locationQuery){
+    const searchParams = {
+        key: youtubeKey,
+        q: 'Travel Tips ' + locationQuery,
+        part: 'snippet',
+        type: 'video',
+        videoEmbeddable: true
+    }
+    const searchString = formatQueryParams(searchParams);
+    const videoSearchURL = YOUTUBE_SEARCH_URL + '?' + searchString;
+    fetch(videoSearchURL)
+    .then(response => {
+        if (response.ok) return response.json();
+        throw new Error (response.statusText);
+    })
+    .then(videoJson => displayYoutubeResults(videoJson))
+    .catch(err => {
+        //Bad case: display error message, hide results section
+        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
+        $('#js-results').prop('hidden', true);
+        $('#js-error-msg').prop('hidden', false);
+    }) 
+}
+
+//FOURSQUARE RECOMMENDATIONS RESULTS//
+
 function renderPlaceResult(placeResult){
     return `<div class='venue-result'>
         <h3>${placeResult.venue.name}</h3>
@@ -104,7 +151,6 @@ function getRecommendations(latitude, longitude){
     }
     const recQuery = formatQueryParams(recParams);
     const recUrl = FOUR_BASE_URL + '?' + recQuery;
-    console.log(recUrl);
     //call to foursquare API
     fetch(recUrl)
     .then(response => {
@@ -118,8 +164,9 @@ function getRecommendations(latitude, longitude){
         $('#js-results').prop('hidden', true);
         $('#js-error-msg').prop('hidden', false);
     });
-
 }
+
+//WEATHER RESULTS//
 
 //TODO: display 5 or 6 days weather results (excluding today): min, max, probability of precipitation
 function displayWeatherResults(weatherJson){
@@ -169,6 +216,8 @@ function getWeather(latitude, longitude){
     });
 }
 
+//LATITUDE AND LONGITUDE (FOR OTHER API USE)//
+
 function formatLatLon(locationJson){
     //gets the latitude and longitude (rounded)
     const latitude = Math.round(locationJson[0].lat * 100)/100;
@@ -202,6 +251,8 @@ function getLatLon(cityQuery, countryQuery){
         $('#js-error-msg').prop('hidden', false);
     });
 }
+
+//EXCHANGE RATE RESULTS//
 
 function displayXchangeResults(responseJson, toCurrency, fromCurrency){
     //round the given exchange rate
@@ -245,10 +296,13 @@ function watchSubmit(){
         const countryIdx = getCountryIdx(countryQuery);
 
         //if the user didn't enter a city, make it the capital of the country
+        //also call the video tips with the country
         if(!cityQuery) {
             cityQuery = getCapital(countryIdx);
-        }
-        //get latitude and longitude in order to fetch weather
+            getVideos(countryQuery);
+        } else getVideos(cityQuery); //call video tips with the city
+
+        //get latitude and longitude in order to fetch weather and recommendations
         getLatLon(cityQuery, countryQuery);
 
         //get currency code of destination country

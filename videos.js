@@ -14,7 +14,7 @@ function formatQueryParams(params){
 }
 
 //puts each result into html string format
-function renderResult(result){
+function renderVideoResult(result){
     return `<div class="search-result">
     <h3 class="result-title">${result.snippet.title}</h3>
     <input type="image" class="trigger" id="${result.id.videoId}" aria-label="Open Video in Lightbox: ${result.snippet.title}"
@@ -25,7 +25,7 @@ function renderResult(result){
 function displayYoutubeResults(videoJson){
     //HTML string array containing the results of the search
     console.log(videoJson);
-    const resultsHTML = videoJson.items.map(item => renderResult(item)).join("\n");
+    const resultsHTML = videoJson.items.map(item => renderVideoResult(item)).join("\n");
     //put into HTML
     $('#js-video-tips').empty();
     $('#js-video-tips').html('<h2>Watch some travel tips</h2>');
@@ -55,10 +55,8 @@ function getVideos(locationQuery){
         $('#js-error-msg').text(`Something went wrong: ${err.message}`);
         $('#js-results').prop('hidden', true);
         $('#js-error-msg').prop('hidden', false);
-    })
-
+    }) 
 }
-
 
 function watchSubmit(){
     $('.js-form').submit( event => {
