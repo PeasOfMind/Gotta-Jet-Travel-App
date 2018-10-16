@@ -323,38 +323,72 @@ function watchSubmit(){
         const countryIdx = getCountryIdx(countryQuery);
 
         //show error to user if country can't be found
-        if (countryIdx === -1) generateErr(countryQuery);
+        if (countryIdx === -1) {generateErr(countryQuery);
+        } else {
+            //if the user didn't enter a city, make it the capital of the country
+            //also call the video tips with the country
+            if(!cityQuery) {
+                cityQuery = getCapital(countryIdx);
+                getVideos(countryQuery);
+            } else getVideos(cityQuery); //call video tips with the city
 
-        //if the user didn't enter a city, make it the capital of the country
-        //also call the video tips with the country
-        if(!cityQuery) {
-            cityQuery = getCapital(countryIdx);
-            getVideos(countryQuery);
-        } else getVideos(cityQuery); //call video tips with the city
+            //get latitude and longitude in order to fetch weather and recommendations
+            getLatLon(cityQuery, countryQuery);
 
-        //get latitude and longitude in order to fetch weather and recommendations
-        getLatLon(cityQuery, countryQuery);
+            //get currency code of destination country
+            const currencyCode = convertToCurrency(countryIdx);
 
-        //get currency code of destination country
-        const currencyCode = convertToCurrency(countryIdx);
+            //set default origin country to US
+            let originCountryIdx = getCountryIdx('United States');
 
-        //set default origin country to US
-        let originCountryIdx = getCountryIdx('United States');
+            //if the user entered a origin country, get the currency code for that instead
+            if (originCountry) {
+                originCountryIdx = getCountryIdx(originCountry);
 
-        //if the user entered a origin country, get the currency code for that instead
-        if (originCountry) {
-            originCountryIdx = getCountryIdx(originCountry);
+                //show error to user if country can't be found
+                if (originCountryIdx === -1) {generateErr(originCountry);
+                } else {
+                    const originCurrencyCode = convertToCurrency(originCountryIdx);
+                    getXchangeRate(currencyCode, originCurrencyCode);
+                }
+            } else getXchangeRate(currencyCode);
 
-            //show error to user if country can't be found
-            if (originCountryIdx === -1) generateErr(originCountry);
+            //Tell user what language(s) to learn
+            languages(countryIdx);
+        }
+    });
+}
 
-            const originCurrencyCode = convertToCurrency(originCountryIdx);
-            getXchangeRate(currencyCode, originCurrencyCode);
-        } else getXchangeRate(currencyCode);
+//makes the html code for the embedded video link using iframe
+function renderEmbedLink(videoCode){
+    return `<iframe width="560" height="315" 
+    src="https://www.youtube.com/embed/${videoCode}" frameborder="0" 
+    allow="autoplay; encrypted-media" allowfullscreen></iframe>`
+}
 
-        //Tell user what language(s) to learn
-        languages(countryIdx);
+//makes modal visible or invisible
+function toggleModal(){
+    $('.modal').toggleClass('show-modal');
+}
+
+function watchModal(){
+    $('#js-video-tips').on('click', '.trigger', function(event){
+        event.preventDefault();
+        //get video title
+        const videoTitle = $(this).attr('alt');
+        //passes the video id into renderEmbedLink
+        const embedLink = renderEmbedLink($(this).attr('id'));
+        //insert the embedded link into the modal paragraph 
+        $('.video-player').html(embedLink).attr('aria-label',`Opened Video in Lightbox: ${videoTitle}`);
+        //make the modal visible
+        toggleModal();
+    });
+
+    $('.close-button').click(event => {
+        //make the modal hidden
+        toggleModal();
     });
 }
 
 $(watchSubmit)
+$(watchModal)

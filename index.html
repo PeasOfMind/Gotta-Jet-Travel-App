@@ -8,11 +8,20 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <header>
         <h1>Gonna Jet</h1>
         <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
+    </header>
+    <main>
+        <div class="modal">
+            <div class="modal-content">
+                <button class="close-button" aria-label="Close Video Player">&times;</button>
+                <p class="video-player" aria-live="assertive"></p>
+            </div>
+        </div>
         <form id="place-search" class="js-form">
             <label for="city">Destination City (optional)</label>
             <input name="city" type="text" id="js-city" placeholder="e.g Paris">
@@ -22,8 +31,6 @@
             <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
             <input type="submit" value="Let's go!">
         </form>
-    </header>
-    <main>
         <!-- results scenario -->
         <div id="js-results" hidden>
             <!-- <section class="time-zone">
