@@ -1,0 +1,161 @@
+/* color scheme: 
+#1a1207
+#515257
+#2d3a43
+#ebe2d9
+#807f7d */
+
+html {
+    background: url(images/adventure-background.jpg) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    
+    font-family: 'Open Sans', sans-serif;
+}
+
+header {
+    text-align: center;
+    margin: 10px;
+}
+
+h1, h2{
+    font-family: 'Niramit', sans-serif;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+form {
+    margin-bottom: 0;
+}
+
+input{
+    display: block;
+    border: none;
+    border-radius: 2px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    padding: 5px;
+}
+
+label {
+    color: #1A1207;
+}
+
+input[type=submit] {
+    background-color: #1A1207;
+    margin-bottom: 0;
+    color: #EBE2D9;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+h4 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#js-results > section, .error-msg {
+    background-color: #2D3A43;
+    color: #EBE2D9;
+}
+
+#input-form {
+    background-color: #EBE2D9;
+}
+
+#js-results > section, #input-form, .error-msg {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+#weather-results > li {
+    margin-top: 5px;
+}
+
+.weather-icon {
+    background: white;
+    border-radius: 5px;
+}
+.venue-result {
+    background-color: #EBE2D9;
+    color: #2D3A43;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.venue-result > p {
+    line-height: 1.2em;
+}
+
+.info-source {
+    text-align: right;
+}
+
+.search-result {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.trigger {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.6);
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: absolute;
+    padding: 1em 1.5em;
+    background-color: none;
+    border-radius: 1em;
+}
+
+.close-button {
+    border: none;
+    padding: 0 0.2em;
+    float: right;
+    font-size: 2em;
+    background: none;
+}
+
+.close-button:hover, .close-button:active, .close-button:focus {
+    color: white;
+    font-weight: bolder;
+}
+
+.show-modal {
+    visibility: visible;
+}

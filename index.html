@@ -8,6 +8,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Niramit|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="default.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -22,15 +24,17 @@
                 <p class="video-player" aria-live="assertive"></p>
             </div>
         </div>
-        <form id="place-search" class="js-form">
-            <label for="city">Destination City (optional)</label>
-            <input name="city" type="text" id="js-city" placeholder="e.g Paris">
-            <label for="country">Destination Country (required)</label>
-            <input name="country" type="text" id="js-country" placeholder="e.g. France" required>
-            <label for="origin-country">Origin Country if not United States</label>
-            <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
-            <input type="submit" value="Let's go!">
-        </form>
+        <div id="input-form">
+            <form id="place-search" class="js-form">
+                <label for="city">Destination City (optional)</label>
+                <input name="city" type="text" id="js-city" placeholder="e.g Paris">
+                <label for="country">Destination Country (required)</label>
+                <input name="country" type="text" id="js-country" placeholder="e.g. France" required>
+                <label for="origin-country">Origin Country if not United States</label>
+                <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
+                <input type="submit" value="Let's go!">
+            </form>
+        </div>
         <!-- results scenario -->
         <div id="js-results" hidden>
             <!-- <section class="time-zone">
@@ -58,8 +62,8 @@
             </section>
         </div>
         <!-- error scenario -->
-        <section class="error-msg" id="js-error-msg" hidden>
-        </section>
+        <div class="error-msg" id="js-error-msg" hidden>
+        </div>
     </main>
     <script src="codes.js"></script>
     <script src="currencyCodes.js"></script>

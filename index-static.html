@@ -1,0 +1,123 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gonna Jet - API Capstone</title>
+    <link href="https://fonts.googleapis.com/css?family=Niramit|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="default.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Gonna Jet</h1>
+        <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
+    </header>
+    <main>
+        <div class="modal">
+            <div class="modal-content">
+                <button class="close-button" aria-label="Close Video Player">×</button>
+                <p class="video-player" aria-live="assertive" aria-label="Opened Video in Lightbox: 16 things to know before traveling to Germany"><iframe width="560" height="315" src="https://www.youtube.com/embed/Sglc8TbV1r4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></p>
+            </div>
+        </div>
+        <div id="input-form">
+            <form id="place-search" class="js-form">
+                <label for="city">Destination City (optional)</label>
+                <input name="city" type="text" id="js-city" placeholder="e.g Paris">
+                <label for="country">Destination Country (required)</label>
+                <input name="country" type="text" id="js-country" placeholder="e.g. France" required="">
+                <label for="origin-country">Origin Country if not United States</label>
+                <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
+                <input type="submit" value="Let's go!">
+            </form>
+        </div>
+        <!-- results scenario -->
+        <div id="js-results">
+            <!-- <section class="time-zone">
+                <h2>Current Time at Destination</h2>
+                <p>12:55PM</p>
+            </section> -->
+            <section class="language" id="js-language">
+                <h2>Time to brush up on your German</h2>
+            </section>
+            <section class="currency" id="js-currency">
+                <h2>Currency Conversion</h2>
+                <p>US Dollar to Euro: $ 1 = € 0.86</p>
+            </section>
+            <section class="weather" id="js-weather">
+                <h2>Weather</h2>
+                <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c02n.png" alt="weather icon: Scattered clouds">
+                <ul id="weather-results">
+                    <li>Right Now: 50 ℉ | 10 ℃</li>
+                    <li>Feels Like:  50 ℉ | 10 ℃</li>
+                    <li>Humidity: 78%</li>
+                </ul>
+                <p class="info-source">Powered by Weatherbit</p>
+            </section>
+            <section class="recommended-places" id="js-recommend-places">
+                <h2>Recommended Places around Dorotheenstadt, Berlin</h2>
+                <div class="venue-result">
+                    <h3>Hackendahl</h3>
+                    <h4>Category: Pub</h4>
+                    <p>Friedrichstr. 128 (Claire-Waldoff-Str.)<br>10117 Berlin<br>Germany</p>
+                </div>
+                <div class="venue-result">
+                    <h3>Dussmann das KulturKaufhaus</h3>
+                    <h4>Category: Bookstore</h4>
+                    <p>Friedrichstr. 90<br>10117 Berlin<br>Germany</p>
+                </div>
+                <div class="venue-result">
+                    <h3>Flamingo Fresh Food Bar</h3>
+                    <h4>Category: Sandwich Place</h4>
+                    <p>Neustädtische Kirchstr. 8 (Georgenstr.)<br>10117 Berlin<br>Germany</p>
+                </div>
+                <div class="venue-result">
+                    <h3>Sammlung Boros</h3>
+                    <h4>Category: Art Gallery</h4>
+                    <p>Reinhardtstr. 20<br>10117 Berlin<br>Germany</p>
+                </div>
+                <div class="venue-result">
+                    <h3>Monbijoupark</h3>
+                    <h4>Category: Park</h4>
+                    <p>Oranienburger Str. (Monbijoustr.)<br>10178 Berlin<br>Germany</p>
+                </div>
+                <p class="info-source">Powered by Foursquare</p>
+            </section>
+            <section class="travel-tips" id="js-video-tips">
+                <h2>Watch some travel tips</h2>
+                <div class="search-result">
+                    <h3 class="result-title">11 PRACTICAL TIPS FOR TRAVELLING TO GERMANY!</h3>
+                    <input type="image" class="trigger" id="-T1AJ8-o3Qk" aria-label="Open Video in Lightbox: 11 PRACTICAL TIPS FOR TRAVELLING TO GERMANY!" src="https://i.ytimg.com/vi/-T1AJ8-o3Qk/mqdefault.jpg" alt="11 PRACTICAL TIPS FOR TRAVELLING TO GERMANY!">
+                </div>
+                <div class="search-result">
+                    <h3 class="result-title">Visit Germany - The DON'Ts of Visiting Germany</h3>
+                    <input type="image" class="trigger" id="DBDPY2yRxbc" aria-label="Open Video in Lightbox: Visit Germany - The DON'Ts of Visiting Germany" src="https://i.ytimg.com/vi/DBDPY2yRxbc/mqdefault.jpg" alt="Visit Germany - The DON'Ts of Visiting Germany">
+                </div>
+                <div class="search-result">
+                    <h3 class="result-title">16 things to know before traveling to Germany</h3>
+                    <input type="image" class="trigger" id="Sglc8TbV1r4" aria-label="Open Video in Lightbox: 16 things to know before traveling to Germany" src="https://i.ytimg.com/vi/Sglc8TbV1r4/mqdefault.jpg" alt="16 things to know before traveling to Germany">
+                </div>
+                <div class="search-result">
+                    <h3 class="result-title">5 German Travel Tips from Wolters World - Collaboration Video - Deutsch lernen</h3>
+                    <input type="image" class="trigger" id="TqJNxiqrVRI" aria-label="Open Video in Lightbox: 5 German Travel Tips from Wolters World - Collaboration Video - Deutsch lernen" src="https://i.ytimg.com/vi/TqJNxiqrVRI/mqdefault.jpg" alt="5 German Travel Tips from Wolters World - Collaboration Video - Deutsch lernen">
+                </div>
+                <div class="search-result">
+                    <h3 class="result-title">THINGS TO KNOW BEFORE COMING TO GERMANY</h3>
+                    <input type="image" class="trigger" id="gxuTJN-sJNs" aria-label="Open Video in Lightbox: THINGS TO KNOW BEFORE COMING TO GERMANY" src="https://i.ytimg.com/vi/gxuTJN-sJNs/mqdefault.jpg" alt="THINGS TO KNOW BEFORE COMING TO GERMANY">
+                </div>
+                <p class="info-source">Powered by Youtube</p>
+            </section>
+        </div>
+        <!-- error scenario -->
+        <div class="error-msg" id="js-error-msg" hidden>
+            <h2>Sorry, nathalerlands not found. Try checking your spelling or simplifying your search.</h2>
+        </div>
+    </main>
+    <footer>
+        <p>Created by PeasofMind</p>
+    </footer>
+    <script src="codes.js"></script>
+    <script src="currencyCodes.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

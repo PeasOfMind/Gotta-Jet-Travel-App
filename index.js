@@ -76,7 +76,7 @@ function formatQueryParams(params){
 
 //convert celcius to farenheit
 function cToF(cTemp){
-    return (cTemp * 9/5)+32;
+    return Math.round(((cTemp * 9/5)+32) * 100)/100;
 }
 
 //VIDEO RESULTS//
@@ -97,6 +97,7 @@ function displayYoutubeResults(videoJson){
     $('#js-video-tips').empty();
     $('#js-video-tips').html('<h2>Watch some travel tips</h2>');
     $('#js-video-tips').append(resultsHTML);
+    $('#js-video-tips').append('<p class="info-source">Powered by Youtube</p>'); 
     $('#js-results').prop('hidden', false);
 }
 
@@ -140,7 +141,7 @@ function displayRecResults(recommendsJson){
     const resultsHTML = results.items.map(item => renderPlaceResult(item)).join("\n");
     const recommendHTML = `<h2>${results.type} around ${recommendsJson.response.headerFullLocation}</h2>
     ${resultsHTML}
-    <p>Powered by Foursquare</p>`;
+    <p class="info-source">Powered by Foursquare</p>`;
     $('#js-recommend-places').empty();
     $('#js-recommend-places').html(recommendHTML);
     $('#js-results').prop('hidden', false);
@@ -181,7 +182,7 @@ function displayWeatherResults(weatherJson){
     //display weather results
     const results = weatherJson.data[0];
     const weatherHTML = `
-    <h2>Weather</h2>
+    <h2>Weather at Destination</h2>
     <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/${results.weather.icon
     }.png" alt="weather icon: ${results.weather.description}">
     <ul id="weather-results">
@@ -191,6 +192,7 @@ function displayWeatherResults(weatherJson){
     </ul>`
     $('#js-weather').empty();
     $('#js-weather').html(weatherHTML);
+    $('#js-weather').append('<p class="info-source">Powered by Weatherbit</p>');
     $('#js-results').prop('hidden', false);
 }
 
@@ -296,10 +298,10 @@ function languages(countryIdx){
     const langArray = Object.values(countriesArray[countryIdx].languages);
     let langToLearn = 'Time to brush up on your '
     if (langArray.includes('English')) langToLearn = "You'll get by just fine with English";
-    else if (langArray.length === 1) langToLearn += `${langArray[0]}.`
-    else if (langArray.length === 2) langToLearn += `${langArray[0]} and/or ${langArray[1]}.`;
+    else if (langArray.length === 1) langToLearn += `${langArray[0]}`
+    else if (langArray.length === 2) langToLearn += `${langArray[0]} and/or ${langArray[1]}`;
     else langArray.forEach(function(language, idx){
-        if(idx === langArray.length-1) langToLearn += `and/or ${language}.`;
+        if(idx === langArray.length-1) langToLearn += `and/or ${language}`;
         else langToLearn += `${language}, `;
     });
     $('#js-language').html(`<h2>${langToLearn}</h2>`);
@@ -321,6 +323,8 @@ function watchSubmit(){
         const originCountry = ($('#js-origin').val());
 
         const countryIdx = getCountryIdx(countryQuery);
+        
+        $('#js-error-msg').prop('hidden', true);
 
         //show error to user if country can't be found
         if (countryIdx === -1) {generateErr(countryQuery);
