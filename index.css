@@ -149,10 +149,11 @@ h4 {
     float: right;
     font-size: 2em;
     background: none;
+    color: white;
 }
 
 .close-button:hover, .close-button:active, .close-button:focus {
-    color: white;
+    color: #807F7D;
     font-weight: bolder;
 }
 
