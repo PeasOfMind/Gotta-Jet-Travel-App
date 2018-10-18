@@ -4,13 +4,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gonna Jet - API Capstone</title>
     <link href="https://fonts.googleapis.com/css?family=Niramit|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/solid.css" 
+    integrity="sha384-osqezT+30O6N/vsMqwW8Ch6wKlMofqueuia2H7fePy42uC05rm1G+BUPSd2iBSJL" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" 
+    integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I" 
+    crossorigin="anonymous">
     <link rel="stylesheet" href="default.css">
     <link rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <h1>Gonna Jet</h1>
+        <h1>Gonna Jet <i class="fas fa-plane"></i></h1>
         <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
     </header>
     <main>
@@ -22,11 +28,11 @@
         </div>
         <div id="input-form">
             <form id="place-search" class="js-form">
-                <label for="city">Destination City (optional)</label>
+                <label for="city">Destination City</label>
                 <input name="city" type="text" id="js-city" placeholder="e.g Paris">
                 <label for="country">Destination Country (required)</label>
                 <input name="country" type="text" id="js-country" placeholder="e.g. France" required="">
-                <label for="origin-country">Origin Country if not United States</label>
+                <label for="origin-country">Origin Country if not U.S.</label>
                 <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
                 <input type="submit" value="Let's go!">
             </form>
@@ -55,7 +61,7 @@
                 <p class="info-source">Powered by Weatherbit</p>
             </section>
             <section class="recommended-places" id="js-recommend-places">
-                <h2>Recommended Places around Dorotheenstadt, Berlin</h2>
+                <h2>Recommended Places Around Dorotheenstadt, Berlin</h2>
                 <div class="venue-result">
                     <h3>Hackendahl</h3>
                     <h4>Category: Pub</h4>
@@ -81,10 +87,10 @@
                     <h4>Category: Park</h4>
                     <p>Oranienburger Str. (Monbijoustr.)<br>10178 Berlin<br>Germany</p>
                 </div>
-                <p class="info-source">Powered by Foursquare</p>
+                <p class="info-source">Powered by Foursquare <i class="fab fa-foursquare icon"></i></p>
             </section>
             <section class="travel-tips" id="js-video-tips">
-                <h2>Watch some travel tips</h2>
+                <h2>Watch Some Travel Tips</h2>
                 <div class="search-result">
                     <h3 class="result-title">11 PRACTICAL TIPS FOR TRAVELLING TO GERMANY!</h3>
                     <input type="image" class="trigger" id="-T1AJ8-o3Qk" aria-label="Open Video in Lightbox: 11 PRACTICAL TIPS FOR TRAVELLING TO GERMANY!" src="https://i.ytimg.com/vi/-T1AJ8-o3Qk/mqdefault.jpg" alt="11 PRACTICAL TIPS FOR TRAVELLING TO GERMANY!">
@@ -105,7 +111,7 @@
                     <h3 class="result-title">THINGS TO KNOW BEFORE COMING TO GERMANY</h3>
                     <input type="image" class="trigger" id="gxuTJN-sJNs" aria-label="Open Video in Lightbox: THINGS TO KNOW BEFORE COMING TO GERMANY" src="https://i.ytimg.com/vi/gxuTJN-sJNs/mqdefault.jpg" alt="THINGS TO KNOW BEFORE COMING TO GERMANY">
                 </div>
-                <p class="info-source">Powered by Youtube</p>
+                <p class="info-source">Powered by Youtube <i class="fab fa-youtube icon"></i></p>
             </section>
         </div>
         <!-- error scenario -->

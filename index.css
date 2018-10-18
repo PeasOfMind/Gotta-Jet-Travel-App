@@ -43,7 +43,7 @@ form {
     margin-bottom: 0;
 }
 
-input{
+form > input{
     display: block;
     border: none;
     border-radius: 2px;
@@ -57,21 +57,28 @@ label {
     color: #1A1207;
 }
 
-input[type=submit] {
+input[type="submit"] {
     background-color: #1A1207;
     margin-bottom: 0;
     color: #EBE2D9;
 }
 
-h3 {
+input[type="submit"]:hover, input[type="submit"]:active, input[type="submit"]:focus {
+    background-color: #807f7d;
+}
+
+h3, .icon{
     font-size: 1.5em;
-    margin-bottom: 15px;
 }
 
 h4 {
     font-size: 1.2em;
     margin-bottom: 10px;
 }
+/* 
+input[type="image"] {
+    width: 100%;
+} */
 
 #js-results > section, .error {
     background-color: #2D3A43;
@@ -88,6 +95,10 @@ h4 {
     border-radius: 5px;
 }
 
+#weather-results{
+    margin-bottom: 10px;
+}
+
 #weather-results > li {
     margin-top: 5px;
 }
@@ -95,6 +106,7 @@ h4 {
 .weather-icon {
     background: white;
     border-radius: 5px;
+    padding: 10px;
 }
 .venue-result {
     background-color: #EBE2D9;
@@ -102,6 +114,10 @@ h4 {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
+}
+
+.venue-result > h3 {
+    margin-bottom: 15px;
 }
 
 .venue-result > p {
@@ -113,14 +129,15 @@ h4 {
 }
 
 .search-result {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .trigger {
     background: none;
     border: none;
     padding: 0;
+    margin-top: 10px;
 }
 
 .modal {
@@ -159,4 +176,10 @@ h4 {
 
 .show-modal {
     visibility: visible;
+}
+
+@media only screen and (max-width: 360px){
+    .trigger {
+        width: 100%;
+    }
 }

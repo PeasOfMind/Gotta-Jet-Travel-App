@@ -858,7 +858,7 @@ const timeZones = [
       "text": "(UTC+03:00) Nairobi",
       "utc": [
         "Africa/Addis_Ababa",
-        "Africa/Asmera",
+        "Africa/Asmara",
         "Africa/Dar_es_Salaam",
         "Africa/Djibouti",
         "Africa/Juba",

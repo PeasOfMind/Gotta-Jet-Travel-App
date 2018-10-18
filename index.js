@@ -178,12 +178,11 @@ function displayTime(weatherJson){
     const destTimezone = weatherJson.data[0].timezone;
     const zoneIdx = timeZones.findIndex(zone => zone.utc.includes(destTimezone));
     const timeOffset = timeZones[zoneIdx].offset;
-
     //get Date object for current location
     const d = new Date();
     //getTimezoneOffset returns minutes - convert to milliseconds to get UTC time
     const utcTime = d.getTime() + d.getTimezoneOffset()*1000*60;
-    const destDate = new Date(utcTime + 1000*60*60*timeOffset)
+    const destDate = new Date(utcTime + 1000*60*60*timeOffset);
     const timeString = destDate.toLocaleTimeString('en-US');
     $('#js-time').html(`<h2>Current Time at Destination</h2>
     <p>${timeString}</p>`);
@@ -225,18 +224,20 @@ function getWeather(latitude, longitude){
     }
     const weatherQuery = formatQueryParams(weatherParams);
     const weatherUrl = WEATHER_BASE_URL + '?' + weatherQuery;
+    console.log(weatherUrl);
     //call to weatherbit location API
     fetch(weatherUrl)
     .then(response => {
         if (response.ok) return response.json();
         throw new Error (response.statusText);
-    })
-    .then(weatherJson => {
-        displayWeatherResults(weatherJson);
-        displayTime(weatherJson);
     }).catch(err => {
         //Bad case: display error message in the specific API sections it affects
         $('#js-weather').html(`<p class="API-error">Sorry couldn't get you weather. Something went wrong: ${err.message}<p>`);
+    }).then(weatherJson => {
+        displayWeatherResults(weatherJson);
+        displayTime(weatherJson);
+    }).catch(err => {
+        $('#js-time').html(`<p class="API-error">Sorry couldn't get you time. Timezone not found.<p>`);
     });
 }
 
@@ -301,7 +302,7 @@ function getXchangeRate(toCurrency, fromCurrency = 'USD'){
     .then(responseJson => displayXchangeResults(responseJson, toCurrency, fromCurrency))
     .catch(err => {
         //Bad case: display error message in the specific API sections it affects
-        $('#js-currency').html(`<p class="API-error">Sorry couldn't get you currency. Something went wrong: ${err.message}<p>`);
+        $('#js-currency').html(`<p class="API-error">Sorry couldn't get you currency. Something went wrong: No information available on ${toCurrency}.<p>`);
     });
 }
 
