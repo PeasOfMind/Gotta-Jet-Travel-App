@@ -73,7 +73,7 @@ h4 {
     margin-bottom: 10px;
 }
 
-#js-results > section, .error-msg {
+#js-results > section, .error {
     background-color: #2D3A43;
     color: #EBE2D9;
 }
@@ -82,7 +82,7 @@ h4 {
     background-color: #EBE2D9;
 }
 
-#js-results > section, #input-form, .error-msg {
+#js-results > section, #input-form, .error {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;

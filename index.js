@@ -95,7 +95,7 @@ function displayYoutubeResults(videoJson){
     const resultsHTML = videoJson.items.map(item => renderVideoResult(item)).join("\n");
     //put into HTML
     $('#js-video-tips').empty();
-    $('#js-video-tips').html('<h2>Watch some travel tips</h2>');
+    $('#js-video-tips').html('<h2>Watch Some Travel Tips</h2>');
     $('#js-video-tips').append(resultsHTML);
     $('#js-video-tips').append('<p class="info-source">Powered by Youtube</p>'); 
     $('#js-results').prop('hidden', false);
@@ -118,10 +118,8 @@ function getVideos(locationQuery){
     })
     .then(videoJson => displayYoutubeResults(videoJson))
     .catch(err => {
-        //Bad case: display error message, hide results section
-        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
-        $('#js-results').prop('hidden', true);
-        $('#js-error-msg').prop('hidden', false);
+        //Bad case: display error message in the specific API sections it affects
+        $('#js-video-tips').html(`<p class="API-error">Sorry couldn't get you video tips. Something went wrong: ${err.message}<p>`);
     }) 
 }
 
@@ -139,7 +137,7 @@ function displayRecResults(recommendsJson){
     //display recommended places from foursquare
     const results = recommendsJson.response.groups[0];
     const resultsHTML = results.items.map(item => renderPlaceResult(item)).join("\n");
-    const recommendHTML = `<h2>${results.type} around ${recommendsJson.response.headerFullLocation}</h2>
+    const recommendHTML = `<h2>${results.type} Around ${recommendsJson.response.headerFullLocation}</h2>
     ${resultsHTML}
     <p class="info-source">Powered by Foursquare</p>`;
     $('#js-recommend-places').empty();
@@ -168,11 +166,27 @@ function getRecommendations(latitude, longitude){
     })
     .then(recommendsJson => displayRecResults(recommendsJson))
     .catch(err => {
-        //Bad case: display error message, hide results section
-        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
-        $('#js-results').prop('hidden', true);
-        $('#js-error-msg').prop('hidden', false);
+        //Bad case: display error message in the specific API sections it affects
+        $('#js-recommend-places').html(`<p class="API-error">Sorry couldn't get you recommendations. Something went wrong: ${err.message}<p>`);
     });
+}
+
+//TIME RESULTS//
+function displayTime(weatherJson){
+
+    //gets the timezone offset for destination location
+    const destTimezone = weatherJson.data[0].timezone;
+    const zoneIdx = timeZones.findIndex(zone => zone.utc.includes(destTimezone));
+    const timeOffset = timeZones[zoneIdx].offset;
+
+    //get Date object for current location
+    const d = new Date();
+    //getTimezoneOffset returns minutes - convert to milliseconds to get UTC time
+    const utcTime = d.getTime() + d.getTimezoneOffset()*1000*60;
+    const destDate = new Date(utcTime + 1000*60*60*timeOffset)
+    const timeString = destDate.toLocaleTimeString('en-US');
+    $('#js-time').html(`<h2>Current Time at Destination</h2>
+    <p>${timeString}</p>`);
 }
 
 //WEATHER RESULTS//
@@ -217,12 +231,12 @@ function getWeather(latitude, longitude){
         if (response.ok) return response.json();
         throw new Error (response.statusText);
     })
-    .then(weatherJson => displayWeatherResults(weatherJson))
-    .catch(err => {
-        //Bad case: display error message, hide results section
-        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
-        $('#js-results').prop('hidden', true);
-        $('#js-error-msg').prop('hidden', false);
+    .then(weatherJson => {
+        displayWeatherResults(weatherJson);
+        displayTime(weatherJson);
+    }).catch(err => {
+        //Bad case: display error message in the specific API sections it affects
+        $('#js-weather').html(`<p class="API-error">Sorry couldn't get you weather. Something went wrong: ${err.message}<p>`);
     });
 }
 
@@ -255,10 +269,9 @@ function getLatLon(cityQuery, countryQuery){
     })
     .then(locationJson => formatLatLon(locationJson))
     .catch(err => {
-        //Bad case: display error message, hide results section
-        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
-        $('#js-results').prop('hidden', true);
-        $('#js-error-msg').prop('hidden', false);
+        //Bad case: display error message in the specific API sections it affects
+        $('#js-weather').html(`<p class="API-error">Sorry couldn't get you weather. Something went wrong: ${err.message}<p>`);
+        $('#js-recommend-places').html(`<p class="API-error">Sorry couldn't get you recommendations. Something went wrong: ${err.message}<p>`);
     });
 }
 
@@ -287,30 +300,47 @@ function getXchangeRate(toCurrency, fromCurrency = 'USD'){
     })
     .then(responseJson => displayXchangeResults(responseJson, toCurrency, fromCurrency))
     .catch(err => {
-        //Bad case: display error message, hide results section
-        $('#js-error-msg').text(`Something went wrong: ${err.message}`);
-        $('#js-results').prop('hidden', true);
-        $('#js-error-msg').prop('hidden', false);
+        //Bad case: display error message in the specific API sections it affects
+        $('#js-currency').html(`<p class="API-error">Sorry couldn't get you currency. Something went wrong: ${err.message}<p>`);
     });
 }
 
-function languages(countryIdx){
-    const langArray = Object.values(countriesArray[countryIdx].languages);
-    let langToLearn = 'Time to brush up on your '
-    if (langArray.includes('English')) langToLearn = "You'll get by just fine with English";
-    else if (langArray.length === 1) langToLearn += `${langArray[0]}`
-    else if (langArray.length === 2) langToLearn += `${langArray[0]} and/or ${langArray[1]}`;
+//add languages from array into string
+function langString(langArray){
+    let langString = '';
+    if (langArray.length === 1) langString = `${langArray[0]}`
+    else if (langArray.length === 2) langString = `${langArray[0]} and/or ${langArray[1]}`;
     else langArray.forEach(function(language, idx){
-        if(idx === langArray.length-1) langToLearn += `and/or ${language}`;
-        else langToLearn += `${language}, `;
+        if(idx === langArray.length-1) langString += `and/or ${language}`;
+        else langString += `${language}, `;
     });
+    return langString;
+}
+
+//LANGUAGES RESULTS//
+
+function displayLanguages(countryIdx){
+    const langArray = Object.values(countriesArray[countryIdx].languages);
+    let langToLearn = 'Time to brush up on your ';
+    let langSubtext = '';
+    //If english is the only language listed, it's fine
+    if (langArray[0] === 'English' && langArray.length === 1) langToLearn = "You'll get by just fine with English";
+    //If english is listed but other languages are too, recommend those also
+    else if (langArray.includes('English')) {
+        langToLearn = "You'll probably get by with English";
+        langArray.splice((langArray.indexOf('English')), 1);
+        langSubtext = `But it won't hurt to also learn some ${langString(langArray)}`;
+    }
+    //Else, need user to learn the country's languages
+    else langToLearn += langString(langArray);
     $('#js-language').html(`<h2>${langToLearn}</h2>`);
+    $('#js-language').append(`<p>${langSubtext}</p>`);
 }
 
 function generateErr(query){
-    $('#js-error-msg').html(`<h2>Sorry, ${query} not found. Try checking your spelling or simplifying your search.</h2>`)
+    $('#js-error').html(`<h2>Sorry, ${query} not found. Try checking your spelling or simplifying your search.</h2>`)
     $('#js-results').prop('hidden', true);
-    $('#js-error-msg').prop('hidden', false);
+    $('#js-error').prop('hidden', false);
 }
 
 function watchSubmit(){
@@ -324,7 +354,7 @@ function watchSubmit(){
 
         const countryIdx = getCountryIdx(countryQuery);
         
-        $('#js-error-msg').prop('hidden', true);
+        $('#js-error').prop('hidden', true);
 
         //show error to user if country can't be found
         if (countryIdx === -1) {generateErr(countryQuery);
@@ -334,7 +364,7 @@ function watchSubmit(){
             if(!cityQuery) {
                 cityQuery = getCapital(countryIdx);
                 getVideos(countryQuery);
-            } else getVideos(cityQuery); //call video tips with the city
+            } else getVideos(`${cityQuery} ${countryQuery}`); //call video tips with the city
 
             //get latitude and longitude in order to fetch weather and recommendations
             getLatLon(cityQuery, countryQuery);
@@ -358,7 +388,7 @@ function watchSubmit(){
             } else getXchangeRate(currencyCode);
 
             //Tell user what language(s) to learn
-            languages(countryIdx);
+            displayLanguages(countryIdx);
         }
     });
 }
@@ -394,5 +424,5 @@ function watchModal(){
     });
 }
 
-$(watchSubmit)
-$(watchModal)
+$(watchSubmit);
+$(watchModal);
