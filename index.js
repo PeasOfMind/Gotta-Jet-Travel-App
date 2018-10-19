@@ -1,5 +1,6 @@
 //Weather API
-const WEATHER_BASE_URL = 'https://api.weatherbit.io/v2.0/current';
+
+const FORECAST_BASE_URL = 'https://api.weatherbit.io/v2.0/forecast/daily';
 
 const weatherbitKey = 'd71c43c198a0496980e61a6b389cc98a';
 
@@ -8,8 +9,6 @@ const weatherbitKey = 'd71c43c198a0496980e61a6b389cc98a';
 const GEO_BASE_URL = 'https://us1.locationiq.com/v1/search.php';
 
 const geocodeKey = `pk.d192d95e312fef7e3b96dd5355e86c12`;
-
-//TODO: convert user input into geocode (longitude and latitude WGS 84). Need the google geocode API
 
 //Currency API
 const XCHANGE_BASE_URL = 'https://api.exchangeratesapi.io/latest';
@@ -26,10 +25,8 @@ const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 const youtubeKey = 'AIzaSyDOszIaG1Ao6Yf66WAw2n83SUma7jnzRRA';
 
 //TODO: Add source credits for all apis
-//TODO - add language of destination country
 
 //TODO - future: add autocomplete dropdown feature
-//TODO - future: test for edge cases for countries (e.g. GB vs. UK vs. England vs. Britain)
 
 //capitalize first letter of every word in the string & trim off spaces at the ends
 function toTitleCase(str){
@@ -50,8 +47,6 @@ function getCountryIdx(country){
     }
 
     return countryIdx;
-    //TODO: generate error if country isn't found in countriesArray
-    //TODO: account for alternative names
 }
 
 //grabs the capital city of the specified country index
@@ -64,6 +59,12 @@ function getCapital(idx){
 function convertToCurrency(idx){
     //get currency code
     return countriesArray[idx].currency[0];
+}
+
+function formatString(cityQuery,countryQuery){
+    let combinedQuery = `${cityQuery}+${countryQuery}`;
+    combinedQuery = combinedQuery.split(' ').join('+');
+    return combinedQuery;
 }
 
 function formatQueryParams(params){
@@ -84,9 +85,12 @@ function cToF(cTemp){
 //puts each result into html string format
 function renderVideoResult(result){
     return `<div class="search-result">
-    <h3 class="result-title">${result.snippet.title}</h3>
+    <div class="content">
+    <div class="content-overlay"></div>
     <input type="image" class="trigger" id="${result.id.videoId}" aria-label="Open Video in Lightbox: ${result.snippet.title}"
     src="${result.snippet.thumbnails.medium.url}" alt="${result.snippet.title}">
+    <div class="content-details fadeIn-top"><h3 class="result-title">${result.snippet.title}</h3></div>
+    </div>
 </div>`
 }
 
@@ -95,8 +99,8 @@ function displayYoutubeResults(videoJson){
     const resultsHTML = videoJson.items.map(item => renderVideoResult(item)).join("\n");
     //put into HTML
     $('#js-video-tips').empty();
-    $('#js-video-tips').html('<h2>Watch Some Travel Tips</h2>');
-    $('#js-video-tips').append(resultsHTML);
+    $('#js-video-tips').html('<h2>Youtube Travel Tips</h2>');
+    $('#js-video-tips').append(`<div class="search-container">${resultsHTML}</div>`);
     $('#js-video-tips').append('<p class="info-source">Powered by Youtube</p>'); 
     $('#js-results').prop('hidden', false);
 }
@@ -107,6 +111,7 @@ function getVideos(locationQuery){
         q: 'Travel Tips ' + locationQuery,
         part: 'snippet',
         type: 'video',
+        maxResults: 6,
         videoEmbeddable: true
     }
     const searchString = formatQueryParams(searchParams);
@@ -137,8 +142,8 @@ function displayRecResults(recommendsJson){
     //display recommended places from foursquare
     const results = recommendsJson.response.groups[0];
     const resultsHTML = results.items.map(item => renderPlaceResult(item)).join("\n");
-    const recommendHTML = `<h2>${results.type} Around ${recommendsJson.response.headerFullLocation}</h2>
-    ${resultsHTML}
+    const recommendHTML = `<h2>${results.type}</h2><div class="venue-container">
+    ${resultsHTML}</div>
     <p class="info-source">Powered by Foursquare</p>`;
     $('#js-recommend-places').empty();
     $('#js-recommend-places').html(recommendHTML);
@@ -152,7 +157,7 @@ function getRecommendations(latitude, longitude){
         ll: `${latitude},${longitude}`,
         section: 'topPicks',
         v: '20190112',
-        limit: 5,
+        limit: 6,
         time: 'any',
         day: 'any'
     }
@@ -172,10 +177,10 @@ function getRecommendations(latitude, longitude){
 }
 
 //TIME RESULTS//
-function displayTime(weatherJson){
+function displayTime(forecastJson){
 
     //gets the timezone offset for destination location
-    const destTimezone = weatherJson.data[0].timezone;
+    const destTimezone = forecastJson.timezone;
     const zoneIdx = timeZones.findIndex(zone => zone.utc.includes(destTimezone));
     const timeOffset = timeZones[zoneIdx].offset;
     //get Date object for current location
@@ -188,54 +193,66 @@ function displayTime(weatherJson){
     <p>${timeString}</p>`);
 }
 
-//WEATHER RESULTS//
-
-//TODO: display 5 or 6 days weather results (excluding today): min, max, probability of precipitation
-function displayWeatherResults(weatherJson){
-    //display weather results
-    const results = weatherJson.data[0];
-    const weatherHTML = `
-    <h2>Weather at Destination</h2>
-    <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/${results.weather.icon
-    }.png" alt="weather icon: ${results.weather.description}">
-    <ul id="weather-results">
-    <li>Right Now: ${cToF(results.temp)} &#8457 | ${results.temp} &#8451</li>
-    <li>Feels Like:  ${cToF(results.app_temp)} &#8457 | ${results.app_temp} &#8451</li>
-    <li>Humidity: ${results.rh}%</li>
-    </ul>`
-    $('#js-weather').empty();
-    $('#js-weather').html(weatherHTML);
-    $('#js-weather').append('<p class="info-source">Powered by Weatherbit</p>');
-    $('#js-results').prop('hidden', false);
-}
-
-/*TODO: add a packing list:
+/*TODO: Reach Goal for Future - add a packing list:
 max UV from week's forecast = bring sunglasses, hat, sunscreen
 max Temp >80 = bring shorts and tees, flip flops or sandals
 min Temp <35 = bring winter coat, boots, winter accessories (mitts, gloves, scarves, beanies)
 pop (probability of precipitation) > 50% any day = bring umbrella, rainboots
 */
 
-function getWeather(latitude, longitude){
-    const weatherParams = {
+//WEATHER FORECAST RESULTS//
+
+function renderForecastResult(result){
+    //returns date as a string of milliseconds
+    let dateMilli = Date.parse(result.valid_date);
+    //parsed date is 1 day off. Add 1 day in milliseconds (1 day = 86400000 milliseconds)
+    dateMilli = parseInt(dateMilli)+86400000;
+    //creates date object
+    const dateObj = new Date(dateMilli);
+    const dateString = dateObj.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+    return `<div class="forecast-result">
+    <h3>${dateString}</h3>
+    <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/${result.weather.icon
+    }.png" alt="weather icon: ${result.weather.description}">
+    <ul class="weather-results">
+    <li>Max Temperature: ${cToF(result.max_temp)} &#8457 | ${result.max_temp} &#8451</li>
+    <li>Min Temperature: ${cToF(result.min_temp)} &#8457 | ${result.min_temp} &#8451</li>
+    <li>Chance of Rain: ${result.pop}%</li>
+    <li>Humidity: ${result.rh}%</li>
+    </ul></div>`
+}
+
+function displayForecastResults(forecastJson){
+    //display forecast results
+    const results = forecastJson.data;
+    const forecastHTML = results.map(item => renderForecastResult(item)).join("\n");
+    $('#js-weather').empty();
+    $('#js-weather').html('<h2>Weather Forecast</h2>');
+    $('#js-weather').append(`<div class="forecast-container">${forecastHTML}</div>`);
+    $('#js-weather').append('<p class="info-source">Powered by Weatherbit</p>');
+    $('#js-results').prop('hidden', false);
+}
+
+function getForecast(latitude, longitude){
+    const forecastParams = {
         key: weatherbitKey,
         lat: latitude,
-        lon: longitude
+        lon: longitude,
+        days: 7
     }
-    const weatherQuery = formatQueryParams(weatherParams);
-    const weatherUrl = WEATHER_BASE_URL + '?' + weatherQuery;
-    console.log(weatherUrl);
+    const forecastQuery = formatQueryParams(forecastParams);
+    const forecastUrl = FORECAST_BASE_URL + '?' + forecastQuery;
     //call to weatherbit location API
-    fetch(weatherUrl)
+    fetch(forecastUrl)
     .then(response => {
         if (response.ok) return response.json();
         throw new Error (response.statusText);
     }).catch(err => {
         //Bad case: display error message in the specific API sections it affects
         $('#js-weather').html(`<p class="API-error">Sorry couldn't get you weather. Something went wrong: ${err.message}<p>`);
-    }).then(weatherJson => {
-        displayWeatherResults(weatherJson);
-        displayTime(weatherJson);
+    }).then(forecastJson => {
+        displayForecastResults(forecastJson);
+        displayTime(forecastJson);
     }).catch(err => {
         $('#js-time').html(`<p class="API-error">Sorry couldn't get you time. Timezone not found.<p>`);
     });
@@ -247,21 +264,20 @@ function formatLatLon(locationJson){
     //gets the latitude and longitude (rounded)
     const latitude = Math.round(locationJson[0].lat * 100)/100;
     const longitude = Math.round(locationJson[0].lon * 100)/100;
-    //call the weather and foursquare recommendations APIs
-    getWeather(latitude, longitude);
+    //call the current weather, weather forecast, foursquare recommendations APIs
+    getForecast(latitude, longitude);
     getRecommendations(latitude, longitude);
 }
 
 //get the latitude and longitude of the specified destination
 function getLatLon(cityQuery, countryQuery){
+    const combinedQuery = formatString(cityQuery,countryQuery);
     const locationParams = {
         key: geocodeKey,
-        city: cityQuery,
-        country: countryQuery,
         format: 'json'
     };
     const queryString = formatQueryParams(locationParams);
-    const locationUrl = GEO_BASE_URL + '?' + queryString;
+    const locationUrl = GEO_BASE_URL + '?' + queryString + `&q=${combinedQuery}`;
     //call to locationIQ geocoding API
     fetch(locationUrl)
     .then(response => {
@@ -293,17 +309,21 @@ function displayXchangeResults(responseJson, toCurrency, fromCurrency){
 
 //call the exchangeRate API. USD is default (assume user is in the US)
 function getXchangeRate(toCurrency, fromCurrency = 'USD'){
-    const url = `${XCHANGE_BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`;
-    fetch(url)
-    .then(response => {
-        if (response.ok) return response.json();
-        throw new Error (response.statusText);
-    })
-    .then(responseJson => displayXchangeResults(responseJson, toCurrency, fromCurrency))
-    .catch(err => {
-        //Bad case: display error message in the specific API sections it affects
-        $('#js-currency').html(`<p class="API-error">Sorry couldn't get you currency. Something went wrong: No information available on ${toCurrency}.<p>`);
-    });
+    if (toCurrency === fromCurrency) {
+        $('#js-currency').html(`<h2>Currency Conversion</h2><p>You're not going far. Your currency is accepted at your destination too!<p>`);
+    } else {
+        const url = `${XCHANGE_BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`;
+        fetch(url)
+        .then(response => {
+            if (response.ok) return response.json();
+            throw new Error (response.statusText);
+        })
+        .then(responseJson => displayXchangeResults(responseJson, toCurrency, fromCurrency))
+        .catch(err => {
+            //Bad case: display error message in the specific API sections it affects
+            $('#js-currency').html(`<p class="API-error">Sorry couldn't get you currency. Something went wrong: No information available on ${toCurrency}.<p>`);
+        });
+    }
 }
 
 //add languages from array into string
@@ -338,10 +358,23 @@ function displayLanguages(countryIdx){
     $('#js-language').append(`<p>${langSubtext}</p>`);
 }
 
+//VISA RESULTS//
+function getVisaLink(countryIdx, originCountryIdx){
+    if (countryIdx === originCountryIdx) {
+        $('#js-visa').html(`<h2>Visa Requirements</h2>
+        <p>No visa requirements. Roam freeeeeee!</p>`);
+    } else {
+        const countryCode = countriesArray[countryIdx].cca3.toLowerCase();
+        $('#js-visa').html(`<h2>Visa Requirements</h2>
+        <a class="visa-link" href="https://cibtvisas.com/destination/${countryCode}" target="_blank" rel="noopener noreferrer">
+        Check Visa Requirements for Your Destination</a>`);
+    }
+}
+
 function generateErr(query){
-    $('#js-error').html(`<h2>Sorry, ${query} not found. Try checking your spelling or simplifying your search.</h2>`)
+    $('#js-error-msg').html(`<h2>Sorry, ${query} not found. Try checking your spelling or simplifying your search.</h2>`)
     $('#js-results').prop('hidden', true);
-    $('#js-error').prop('hidden', false);
+    $('#js-error-msg').prop('hidden', false);
 }
 
 function watchSubmit(){
@@ -356,9 +389,11 @@ function watchSubmit(){
         const countryIdx = getCountryIdx(countryQuery);
         
         $('#js-error').prop('hidden', true);
+        $('#js-preview').prop('hidden', true);
 
         //show error to user if country can't be found
-        if (countryIdx === -1) {generateErr(countryQuery);
+        if (countryIdx === -1) {
+            generateErr(countryQuery);
         } else {
             //if the user didn't enter a city, make it the capital of the country
             //also call the video tips with the country
@@ -390,6 +425,8 @@ function watchSubmit(){
 
             //Tell user what language(s) to learn
             displayLanguages(countryIdx);
+            //Generate link to check visa requirements
+            getVisaLink(countryIdx, originCountryIdx);
         }
     });
 }
@@ -407,12 +444,13 @@ function toggleModal(){
 }
 
 function watchModal(){
-    $('#js-video-tips').on('click', '.trigger', function(event){
+    $('#js-video-tips').on('click', '.content', function(event){
         event.preventDefault();
+        const videoImg = $(this).find('.trigger');
         //get video title
-        const videoTitle = $(this).attr('alt');
+        const videoTitle = $(videoImg).attr('alt');
         //passes the video id into renderEmbedLink
-        const embedLink = renderEmbedLink($(this).attr('id'));
+        const embedLink = renderEmbedLink($(videoImg).attr('id'));
         //insert the embedded link into the modal paragraph 
         $('.video-player').html(embedLink).attr('aria-label',`Opened Video in Lightbox: ${videoTitle}`);
         //make the modal visible

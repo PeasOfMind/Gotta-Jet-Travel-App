@@ -21,15 +21,9 @@
 <body>
     <header>
         <h1>Gonna Jet <i class="fas fa-plane"></i></h1>
-        <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
+        <p>Thinking of going somewhere international? Get more info on your destination before you bounce!</p>
     </header>
     <main>
-        <div class="modal">
-            <div class="modal-content">
-                <button class="close-button" aria-label="Close Video Player">&times;</button>
-                <p class="video-player" aria-live="assertive"></p>
-            </div>
-        </div>
         <div id="input-form">
             <form id="place-search" class="js-form">
                 <label for="city">Destination City</label>
@@ -40,6 +34,10 @@
                 <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
                 <input type="submit" value="Let's go!">
             </form>
+        </div>
+        <div class="preview" id="js-preview">
+            <p>Get weather forecasts, currency conversion, place recommendations and more!
+            </p>
         </div>
         <!-- results scenario -->
         <div id="js-results" hidden>
@@ -52,6 +50,8 @@
             <section class="currency" id="js-currency">
             </section>
             <section class="time" id="js-time">
+            </section>
+            <section class="visa" id="js-visa">
             </section>
             <section class="weather" id="js-weather">
                 <!-- <h3>Pack weather appropriate attire:</h3>
@@ -72,6 +72,12 @@
         <!-- error scenario -->
         <div class="error" id="js-error-msg" hidden>
         </div>
+        <div class="modal">
+                <div class="modal-content">
+                    <button class="close-button" aria-label="Close Video Player">&times;</button>
+                    <div class="video-player" aria-live="assertive"></div>
+                </div>
+            </div>
     </main>
     <script src="codes.js"></script>
     <script src="currencyCodes.js"></script>

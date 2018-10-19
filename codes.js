@@ -4381,7 +4381,7 @@ const countriesArray = [
 		"currency": ["GBP"],
 		"callingCode": ["44"],
 		"capital": ["London"],
-		"altSpellings": ["GB", "UK", "Great Britain"],
+		"altSpellings": ["GB", "UK", "Great Britain", "England"],
 		"region": "Europe",
 		"subregion": "Northern Europe",
 		"languages": {
