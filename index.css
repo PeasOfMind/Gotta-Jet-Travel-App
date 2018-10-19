@@ -11,11 +11,12 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+
 }
 
 body {
-    
     font-family: 'Open Sans', sans-serif;
+    
 }
 
 header {
@@ -35,7 +36,7 @@ h1 {
 
 h2 {
     font-size: 2em;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 12px;
 }
 
@@ -82,19 +83,33 @@ h4 {
     margin-bottom: 10px;
 }
 
-#js-results > section, .error, .preview {
-    background-color: #2D3A43;
+#js-results > section, #small-results, .error {
+    /* background-color: #2D3A43; */
+    background-color: rgba(45, 58, 67, 0.95);
     color: #EBE2D9;
 }
 
 #input-form {
-    background-color: #EBE2D9;
+    /* background-color: #EBE2D9; */
+    background-color: rgba(255, 255, 255, 0.4);
+    /* background-color: rgba(0,0,0, 0.2); */
 }
 
-#js-results > section, #input-form, .error, .preview {
+.preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#js-results > section, #small-results, #input-form, .error {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
+}
+
+#small-results > section {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding-bottom: 5px;
 }
 
 .visa-link {
@@ -335,11 +350,3 @@ h4 {
         margin: 0 auto;
     }
 }
-
-
-
-/* @media only screen and (max-width: 600px){
-    .video-player {
-        width: 90%;
-    }
-} */

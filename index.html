@@ -19,50 +19,38 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header>
+    <header role="banner">
         <h1>Gonna Jet <i class="fas fa-plane"></i></h1>
-        <p>Thinking of going somewhere international? Get more info on your destination before you bounce!</p>
+        <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
     </header>
-    <main>
+    <main role="main">
         <div id="input-form">
-            <form id="place-search" class="js-form">
+            <form id="place-search" class="js-form" role="search">
                 <label for="city">Destination City</label>
-                <input name="city" type="text" id="js-city" placeholder="e.g Paris">
+                <input name="city" type="text" id="js-city">
                 <label for="country">Destination Country (required)</label>
-                <input name="country" type="text" id="js-country" placeholder="e.g. France" required>
+                <input name="country" type="text" id="js-country" required>
                 <label for="origin-country">Origin Country if not U.S.</label>
-                <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
+                <input name="origin-country" id="js-origin" type="text">
                 <input type="submit" value="Let's go!">
             </form>
-        </div>
-        <div class="preview" id="js-preview">
-            <p>Get weather forecasts, currency conversion, place recommendations and more!
-            </p>
+            <div class="preview" id="js-preview">
+                <p>Get weather forecasts, currency conversion, place recommendations and more!</p>
+            </div>
         </div>
         <!-- results scenario -->
         <div id="js-results" hidden>
-            <!-- <section class="time-zone">
-                <h2>Current Time at Destination</h2>
-                <p>12:55PM</p>
-            </section> -->
-            <section class="language" id="js-language">
-            </section>
-            <section class="currency" id="js-currency">
-            </section>
-            <section class="time" id="js-time">
-            </section>
-            <section class="visa" id="js-visa">
-            </section>
-            <section class="weather" id="js-weather">
-                <!-- <h3>Pack weather appropriate attire:</h3>
-                <ul class="to-pack">
-                    <li>t-shirts</li>
-                    <li>shorts</li>
-                    <li>flip flops</li>
-                    <li>sunglasses</li>
-                    <li>sunscreen</li>
-                    <li>mosquito spray</li>
-                </ul> -->
+            <div id="small-results">
+                <section class="language" id="js-language" role="region">
+                </section>
+                <section class="currency" id="js-currency" role="region">
+                </section>
+                <section class="time" id="js-time" role="region">
+                </section>
+                <section class="visa" id="js-visa" role="region">
+                </section>
+            </div>
+            <section class="weather" id="js-weather" role="region">
             </section>
             <section class="recommended-places" id="js-recommend-places">
             </section>
@@ -70,7 +58,7 @@
             </section>
         </div>
         <!-- error scenario -->
-        <div class="error" id="js-error-msg" hidden>
+        <div class="error" id="js-error-msg" role="region" hidden>
         </div>
         <div class="modal">
                 <div class="modal-content">

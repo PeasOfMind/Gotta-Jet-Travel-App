@@ -11,183 +11,182 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <header>
+        <header role="banner">
             <h1>Gonna Jet <i class="fas fa-plane"></i></h1>
-            <p>Thinking of going somewhere international? Get more info on your destination before you bounce!</p>
+            <p>Thinking of going somewhere? Get more info on your destination before you bounce!</p>
         </header>
-        <main>
+        <main role="main">
             <div id="input-form">
-                <form id="place-search" class="js-form">
+                <form id="place-search" class="js-form" role="search">
                     <label for="city">Destination City</label>
-                    <input name="city" type="text" id="js-city" placeholder="e.g Paris">
+                    <input name="city" type="text" id="js-city">
                     <label for="country">Destination Country (required)</label>
-                    <input name="country" type="text" id="js-country" placeholder="e.g. France" required="">
+                    <input name="country" type="text" id="js-country" required="">
                     <label for="origin-country">Origin Country if not U.S.</label>
-                    <input name="origin-country" id="js-origin" type="text" placeholder="e.g. Canada">
+                    <input name="origin-country" id="js-origin" type="text">
                     <input type="submit" value="Let's go!">
                 </form>
-            </div>
-            <div class="preview" id="js-preview" hidden="">
-                <p>Get weather forecasts, currency conversion, place recommendations and more!
-                </p>
+                <div class="preview" id="js-preview" hidden="">
+                    <p>Get weather forecasts, currency conversion, place recommendations and more!</p>
+                </div>
             </div>
             <!-- results scenario -->
             <div id="js-results">
-                <!-- <section class="time-zone">
-                    <h2>Current Time at Destination</h2>
-                    <p>12:55PM</p>
-                </section> -->
-                <section class="language" id="js-language"><h2>You'll get by just fine with English</h2><p></p></section>
-                <section class="currency" id="js-currency"><h2>Currency Conversion</h2><p>You're not going far. Your currency is accepted at your destination too!</p><p></p></section>
-                <section class="time" id="js-time"><h2>Current Time at Destination</h2>
-        <p>12:08:14 PM</p></section>
-                <section class="visa" id="js-visa"><h2>Visa Requirements</h2>
-            <p>No visa requirements. Roam freeeeeee!</p></section>
-                <section class="weather" id="js-weather"><h2>Weather Forecast</h2><div class="forecast-container"><div class="forecast-result">
-        <h3>Oct 19</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="weather icon: Few clouds">
-        <ul class="weather-results">
-        <li>Max Temperature: 72.86 ℉ | 22.7 ℃</li>
-        <li>Min Temperature: 59.72 ℉ | 15.4 ℃</li>
-        <li>Chance of Rain: 0%</li>
-        <li>Humidity: 67%</li>
-        </ul></div>
-    <div class="forecast-result">
+                <div id="small-results">
+                    <section class="language" id="js-language" role="region"><h2>You'll probably get by with English</h2><p>But it won't hurt to also learn some Chinese, Malay, and/or Tamil</p></section>
+                    <section class="currency" id="js-currency" role="region"><h2>Currency Conversion</h2>
+        <p>US Dollar to Singapore Dollar: $ 1 = S$ 1.38</p></section>
+                    <section class="time" id="js-time" role="region"><h2>Current Time at Destination</h2>
+        <p>5:53:40 AM</p></section>
+                    <section class="visa" id="js-visa" role="region"><h2>Visa Requirements</h2>
+            <a class="visa-link" href="https://cibtvisas.com/destination/sgp" target="_blank" rel="noopener noreferrer">
+            Check Visa Requirements for Your Destination</a></section>
+                </div>
+                <section class="weather" id="js-weather" role="region"><h2>Weather Forecast</h2><div class="forecast-container"><div class="forecast-result">
         <h3>Oct 20</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="weather icon: Scattered clouds">
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="weather icon: Overcast clouds">
         <ul class="weather-results">
-        <li>Max Temperature: 72.32 ℉ | 22.4 ℃</li>
-        <li>Min Temperature: 53.06 ℉ | 11.7 ℃</li>
-        <li>Chance of Rain: 0%</li>
-        <li>Humidity: 78%</li>
+        <li>Max Temperature: 90.32 ℉ | 32.4 ℃</li>
+        <li>Min Temperature: 77.72 ℉ | 25.4 ℃</li>
+        <li>Chance of Rain: 15%</li>
+        <li>Humidity: 65%</li>
         </ul></div>
     <div class="forecast-result">
         <h3>Oct 21</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c01d.png" alt="weather icon: Clear Sky">
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/r04d.png" alt="weather icon: Light shower rain">
         <ul class="weather-results">
-        <li>Max Temperature: 69.8 ℉ | 21 ℃</li>
-        <li>Min Temperature: 59.54 ℉ | 15.3 ℃</li>
-        <li>Chance of Rain: 0%</li>
-        <li>Humidity: 61%</li>
+        <li>Max Temperature: 90.86 ℉ | 32.7 ℃</li>
+        <li>Min Temperature: 78.98 ℉ | 26.1 ℃</li>
+        <li>Chance of Rain: 50%</li>
+        <li>Humidity: 70%</li>
         </ul></div>
     <div class="forecast-result">
         <h3>Oct 22</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="weather icon: Few clouds">
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="weather icon: Scattered clouds">
         <ul class="weather-results">
-        <li>Max Temperature: 62.96 ℉ | 17.2 ℃</li>
-        <li>Min Temperature: 56.66 ℉ | 13.7 ℃</li>
-        <li>Chance of Rain: 0%</li>
-        <li>Humidity: 84%</li>
+        <li>Max Temperature: 91.58 ℉ | 33.1 ℃</li>
+        <li>Min Temperature: 77.72 ℉ | 25.4 ℃</li>
+        <li>Chance of Rain: 15%</li>
+        <li>Humidity: 70%</li>
         </ul></div>
     <div class="forecast-result">
         <h3>Oct 23</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c04d.png" alt="weather icon: Overcast clouds">
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/r03d.png" alt="weather icon: Heavy rain">
         <ul class="weather-results">
-        <li>Max Temperature: 62.6 ℉ | 17 ℃</li>
-        <li>Min Temperature: 55.58 ℉ | 13.1 ℃</li>
-        <li>Chance of Rain: 15%</li>
-        <li>Humidity: 82%</li>
+        <li>Max Temperature: 95.18 ℉ | 35.1 ℃</li>
+        <li>Min Temperature: 78.26 ℉ | 25.7 ℃</li>
+        <li>Chance of Rain: 85%</li>
+        <li>Humidity: 73%</li>
         </ul></div>
     <div class="forecast-result">
         <h3>Oct 24</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c03d.png" alt="weather icon: Broken clouds">
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/r03d.png" alt="weather icon: Heavy rain">
         <ul class="weather-results">
-        <li>Max Temperature: 65.12 ℉ | 18.4 ℃</li>
-        <li>Min Temperature: 55.58 ℉ | 13.1 ℃</li>
-        <li>Chance of Rain: 0%</li>
-        <li>Humidity: 81%</li>
+        <li>Max Temperature: 92.12 ℉ | 33.4 ℃</li>
+        <li>Min Temperature: 77.9 ℉ | 25.5 ℃</li>
+        <li>Chance of Rain: 90%</li>
+        <li>Humidity: 72%</li>
         </ul></div>
     <div class="forecast-result">
         <h3>Oct 25</h3>
-        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c02d.png" alt="weather icon: Few clouds">
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/r02d.png" alt="weather icon: Moderate rain">
         <ul class="weather-results">
-        <li>Max Temperature: 67.46 ℉ | 19.7 ℃</li>
-        <li>Min Temperature: 58.82 ℉ | 14.9 ℃</li>
-        <li>Chance of Rain: 0%</li>
-        <li>Humidity: 81%</li>
+        <li>Max Temperature: 90.68 ℉ | 32.6 ℃</li>
+        <li>Min Temperature: 76.46 ℉ | 24.7 ℃</li>
+        <li>Chance of Rain: 70%</li>
+        <li>Humidity: 73%</li>
+        </ul></div>
+    <div class="forecast-result">
+        <h3>Oct 26</h3>
+        <img class="weather-icon" src="https://www.weatherbit.io/static/img/icons/c03d.png" alt="weather icon: Broken clouds">
+        <ul class="weather-results">
+        <li>Max Temperature: 90.5 ℉ | 32.5 ℃</li>
+        <li>Min Temperature: 77.36 ℉ | 25.2 ℃</li>
+        <li>Chance of Rain: 45%</li>
+        <li>Humidity: 71%</li>
         </ul></div></div><p class="info-source">Powered by Weatherbit</p></section>
                 <section class="recommended-places" id="js-recommend-places"><h2>Recommended Places</h2><div class="venue-container">
         <div class="venue-result">
-            <h3>Linden Alley</h3>
-            <h4>Category: Pedestrian Plaza</h4>
-            <p>Linden St (btwn Octavia &amp; Gough St)<br>San Francisco, CA 94102<br>United States</p>
+            <h3>Saturday House</h3>
+            <h4>Category: Café</h4>
+            <p>339 Upper Paya Lebar Road<br>534953<br>Singapore</p>
         </div>
     <div class="venue-result">
-            <h3>True Sake</h3>
-            <h4>Category: Liquor Store</h4>
-            <p>560 Hayes St (Laguna)<br>San Francisco, CA 94102<br>United States</p>
+            <h3>Unusual Chicken Rice</h3>
+            <h4>Category: Asian Restaurant</h4>
+            <p>456 MacPherson Road (At Jalan Anggerek)<br>Singapore</p>
         </div>
     <div class="venue-result">
-            <h3>Smitten Ice Cream</h3>
-            <h4>Category: Ice Cream Shop</h4>
-            <p>432 Octavia St #1A (at Linden St)<br>San Francisco, CA 94102<br>United States</p>
+            <h3>Serangoon Sunshine Park</h3>
+            <h4>Category: Park</h4>
+            <p>25 Serangoon Ave 1<br>Singapore</p>
         </div>
     <div class="venue-result">
-            <h3>Brenda's French Soul Food</h3>
-            <h4>Category: Southern / Soul Food Restaurant</h4>
-            <p>652 Polk St (btwn Eddy &amp; Turk St)<br>San Francisco, CA 94102<br>United States</p>
+            <h3>渔村砂煲咖喱鱼头</h3>
+            <h4>Category: Chinese Aristocrat Restaurant</h4>
+            <p>147 Upper Paya Lebar Road<br>Singapore</p>
         </div>
     <div class="venue-result">
-            <h3>Fig &amp; Thistle Wine Bar</h3>
-            <h4>Category: Wine Bar</h4>
-            <p>313 Ivy St (Gough)<br>San Francisco, CA 94102<br>United States</p>
+            <h3>18 Tai Seng</h3>
+            <h4>Category: Shopping Mall</h4>
+            <p>18 Tai Seng Street<br>539775<br>Singapore</p>
         </div>
     <div class="venue-result">
-            <h3>Herbst Theater</h3>
-            <h4>Category: Concert Hall</h4>
-            <p>401 Van Ness Ave (at McAllister St)<br>San Francisco, CA<br>United States</p>
+            <h3>Kay Lee Roast Meat Joint</h3>
+            <h4>Category: BBQ Joint</h4>
+            <p>125 Upp Paya Lebar Road<br>534838<br>Singapore</p>
         </div></div>
         <p class="info-source">Powered by Foursquare</p></section>
                 <section class="travel-tips" id="js-video-tips"><h2>Youtube Travel Tips</h2><div class="search-container"><div class="search-result">
         <div class="content">
         <div class="content-overlay"></div>
-        <input type="image" class="trigger" id="kIp21LwH_Pk" aria-label="Open Video in Lightbox: 15 Travel Tips &amp; Best Places in San Francisco" src="https://i.ytimg.com/vi/kIp21LwH_Pk/mqdefault.jpg" alt="15 Travel Tips &amp; Best Places in San Francisco">
-        <div class="content-details fadeIn-top"><h3 class="result-title">15 Travel Tips &amp; Best Places in San Francisco</h3></div>
+        <input type="image" class="trigger" id="6fHASeSrH8w" aria-label="Open Video in Lightbox: 13 Tips for an AWESOME Trip to Singapore" src="https://i.ytimg.com/vi/6fHASeSrH8w/mqdefault.jpg" alt="13 Tips for an AWESOME Trip to Singapore">
+        <div class="content-details fadeIn-top"><h3 class="result-title">13 Tips for an AWESOME Trip to Singapore</h3></div>
         </div>
     </div>
     <div class="search-result">
         <div class="content">
         <div class="content-overlay"></div>
-        <input type="image" class="trigger" id="Oo6iAxf4si0" aria-label="Open Video in Lightbox: San Francisco Vacation Travel Guide | Expedia" src="https://i.ytimg.com/vi/Oo6iAxf4si0/mqdefault.jpg" alt="San Francisco Vacation Travel Guide | Expedia">
-        <div class="content-details fadeIn-top"><h3 class="result-title">San Francisco Vacation Travel Guide | Expedia</h3></div>
+        <input type="image" class="trigger" id="Grs7-Ck5Ka4" aria-label="Open Video in Lightbox: Singapore Travel Tips: 6 Things to Know Before You Go" src="https://i.ytimg.com/vi/Grs7-Ck5Ka4/mqdefault.jpg" alt="Singapore Travel Tips: 6 Things to Know Before You Go">
+        <div class="content-details fadeIn-top"><h3 class="result-title">Singapore Travel Tips: 6 Things to Know Before You Go</h3></div>
         </div>
     </div>
     <div class="search-result">
         <div class="content">
         <div class="content-overlay"></div>
-        <input type="image" class="trigger" id="WTEFlmxtOww" aria-label="Open Video in Lightbox: San Francisco Travel Tips: Planning, Packing, Getting Around, What To Do" src="https://i.ytimg.com/vi/WTEFlmxtOww/mqdefault.jpg" alt="San Francisco Travel Tips: Planning, Packing, Getting Around, What To Do">
-        <div class="content-details fadeIn-top"><h3 class="result-title">San Francisco Travel Tips: Planning, Packing, Getting Around, What To Do</h3></div>
+        <input type="image" class="trigger" id="CEzaj0W1POY" aria-label="Open Video in Lightbox: First Time in Singapore: 7 Travel Tips" src="https://i.ytimg.com/vi/CEzaj0W1POY/mqdefault.jpg" alt="First Time in Singapore: 7 Travel Tips">
+        <div class="content-details fadeIn-top"><h3 class="result-title">First Time in Singapore: 7 Travel Tips</h3></div>
         </div>
     </div>
     <div class="search-result">
         <div class="content">
         <div class="content-overlay"></div>
-        <input type="image" class="trigger" id="I-zP-DreDUA" aria-label="Open Video in Lightbox: Living Cheap in San Francisco | 10 Travel Tips" src="https://i.ytimg.com/vi/I-zP-DreDUA/mqdefault.jpg" alt="Living Cheap in San Francisco | 10 Travel Tips">
-        <div class="content-details fadeIn-top"><h3 class="result-title">Living Cheap in San Francisco | 10 Travel Tips</h3></div>
+        <input type="image" class="trigger" id="UFSYaj4rVwI" aria-label="Open Video in Lightbox: Singapore Travel Guide: 7 Budget Tips" src="https://i.ytimg.com/vi/UFSYaj4rVwI/mqdefault.jpg" alt="Singapore Travel Guide: 7 Budget Tips">
+        <div class="content-details fadeIn-top"><h3 class="result-title">Singapore Travel Guide: 7 Budget Tips</h3></div>
         </div>
     </div>
     <div class="search-result">
         <div class="content">
         <div class="content-overlay"></div>
-        <input type="image" class="trigger" id="WHJY_FbiIK0" aria-label="Open Video in Lightbox: TRAVEL VLOG | San Francisco" src="https://i.ytimg.com/vi/WHJY_FbiIK0/mqdefault.jpg" alt="TRAVEL VLOG | San Francisco">
-        <div class="content-details fadeIn-top"><h3 class="result-title">TRAVEL VLOG | San Francisco</h3></div>
+        <input type="image" class="trigger" id="gM5iaXRq76Q" aria-label="Open Video in Lightbox: TIPS JALAN-JALAN MURAH KE SINGAPORE - SOLO TRAVELING" src="https://i.ytimg.com/vi/gM5iaXRq76Q/mqdefault.jpg" alt="TIPS JALAN-JALAN MURAH KE SINGAPORE - SOLO TRAVELING">
+        <div class="content-details fadeIn-top"><h3 class="result-title">TIPS JALAN-JALAN MURAH KE SINGAPORE - SOLO TRAVELING</h3></div>
         </div>
     </div>
     <div class="search-result">
         <div class="content">
         <div class="content-overlay"></div>
-        <input type="image" class="trigger" id="2lJXjBJ2_5w" aria-label="Open Video in Lightbox: Travel Tips for San Francisco" src="https://i.ytimg.com/vi/2lJXjBJ2_5w/mqdefault.jpg" alt="Travel Tips for San Francisco">
-        <div class="content-details fadeIn-top"><h3 class="result-title">Travel Tips for San Francisco</h3></div>
+        <input type="image" class="trigger" id="H_hgNmdONPE" aria-label="Open Video in Lightbox: Singapore Travel Guide" src="https://i.ytimg.com/vi/H_hgNmdONPE/mqdefault.jpg" alt="Singapore Travel Guide">
+        <div class="content-details fadeIn-top"><h3 class="result-title">Singapore Travel Guide</h3></div>
         </div>
     </div></div><p class="info-source">Powered by Youtube</p></section>
             </div>
             <!-- error scenario -->
-            <div class="error" id="js-error-msg" hidden="">
+            <div class="error" id="js-error-msg" role="region" hidden="">
             </div>
             <div class="modal">
                     <div class="modal-content">
                         <button class="close-button" aria-label="Close Video Player">×</button>
-                        <div class="video-player" aria-live="assertive" aria-label="Opened Video in Lightbox: 15 Travel Tips &amp; Best Places in San Francisco"><iframe width="560" height="315" src="https://www.youtube.com/embed/kIp21LwH_Pk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div>
+                        <div class="video-player" aria-live="assertive"></div>
                     </div>
                 </div>
         </main>

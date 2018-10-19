@@ -24,9 +24,7 @@ const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 const youtubeKey = 'AIzaSyDOszIaG1Ao6Yf66WAw2n83SUma7jnzRRA';
 
-//TODO: Add source credits for all apis
-
-//TODO - future: add autocomplete dropdown feature
+//TODO: Reach Goal for Future - add autocomplete dropdown feature
 
 //capitalize first letter of every word in the string & trim off spaces at the ends
 function toTitleCase(str){
@@ -151,6 +149,8 @@ function displayRecResults(recommendsJson){
 }
 
 function getRecommendations(latitude, longitude){
+    /* TODO: Reach Goal for Future - add an option for users to search for specific interests 
+    and refresh this section */
     const recParams = {
         client_id: 'MHT31R5PBOCZ4WEQLEQTRO5A42NLUQEEY1HA2SAZUTRIWJBI',
         client_secret: 'JB4HKNXIGKFPGE23JQVFAMOGLSUVHNKSCNKCU3M3Z33RVWVI',
