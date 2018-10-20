@@ -12,7 +12,6 @@ const geocodeKey = `pk.d192d95e312fef7e3b96dd5355e86c12`;
 
 //Currency API
 const XCHANGE_BASE_URL = 'https://api.exchangeratesapi.io/latest';
-//TODO: Reach Goal for Future - use a better API like fixer.io or openexchangerates.org
 
 //Foursquare API
 const FOUR_BASE_URL = 'https://api.foursquare.com/v2/venues/explore';
@@ -24,8 +23,6 @@ const secretKey ='JB4HKNXIGKFPGE23JQVFAMOGLSUVHNKSCNKCU3M3Z33RVWVI';
 const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 const youtubeKey = 'AIzaSyDOszIaG1Ao6Yf66WAw2n83SUma7jnzRRA';
-
-//TODO: Reach Goal for Future - add autocomplete dropdown feature
 
 //capitalize first letter of every word in the string & trim off spaces at the ends
 function toTitleCase(str){
@@ -155,8 +152,6 @@ function displayRecResults(recommendsJson){
 }
 
 function getRecommendations(latitude, longitude){
-    /* TODO: Reach Goal for Future - add an option for users to search for specific interests 
-    and refresh this section */
     const recParams = {
         client_id: 'MHT31R5PBOCZ4WEQLEQTRO5A42NLUQEEY1HA2SAZUTRIWJBI',
         client_secret: 'JB4HKNXIGKFPGE23JQVFAMOGLSUVHNKSCNKCU3M3Z33RVWVI',
@@ -198,13 +193,6 @@ function displayTime(forecastJson){
     $('#js-time').html(`<h2>Current Time at Destination</h2>
     <p>${timeString}</p>`);
 }
-
-/*TODO: Reach Goal for Future - add a packing list:
-max UV from week's forecast = bring sunglasses, hat, sunscreen
-max Temp >80 = bring shorts and tees, flip flops or sandals
-min Temp <35 = bring winter coat, boots, winter accessories (mitts, gloves, scarves, beanies)
-pop (probability of precipitation) > 50% any day = bring umbrella, rainboots
-*/
 
 //WEATHER FORECAST RESULTS//
 

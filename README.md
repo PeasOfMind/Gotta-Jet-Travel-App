@@ -33,3 +33,20 @@ multiple travel resources in one place.
 
 Built with: HTML, CSS, Javascript, and jQuery
 APIs used: Exchangeratesapi, Foursquare, Youtube, locationIQ, and Weatherbit
+
+## Goals for Future Versions
+
+Using a better API like fixer.io or openexchangerates.org that have more
+expansive currency databases.
+
+Adding an autocomplete dropdown feature for text inputs.
+
+Adding an option for users to search for specific interests in the  
+recommended places section and allowing the recommendations to refresh.
+
+Adding a packing list that takes in the weather forecast information.
+For example: 
+High UV from week's forecast = bring sunglasses, hat, sunscreen
+Max Temp >80 = bring shorts and tees, flip flops or sandals
+Min Temp <35 = bring winter coat, boots, winter accessories
+Probability of precipitation > 50% any day = bring umbrella, rainboots
