@@ -12,6 +12,7 @@ const geocodeKey = `pk.d192d95e312fef7e3b96dd5355e86c12`;
 
 //Currency API
 const XCHANGE_BASE_URL = 'https://api.exchangeratesapi.io/latest';
+//TODO: Reach Goal for Future - use a better API like fixer.io or openexchangerates.org
 
 //Foursquare API
 const FOUR_BASE_URL = 'https://api.foursquare.com/v2/venues/explore';
@@ -81,13 +82,18 @@ function cToF(cTemp){
 //VIDEO RESULTS//
 
 //puts each result into html string format
+
 function renderVideoResult(result){
     return `<div class="search-result">
     <div class="content">
+    <a href="https://www.youtube.com/watch?v=${result.id.videoId}" 
+    target="_blank" rel="noopener noreferrer" id="${result.id.videoId}" class="content-link">
     <div class="content-overlay"></div>
-    <input type="image" class="trigger" id="${result.id.videoId}" aria-label="Open Video in Lightbox: ${result.snippet.title}"
-    src="${result.snippet.thumbnails.medium.url}" alt="${result.snippet.title}">
-    <div class="content-details fadeIn-top"><h3 class="result-title">${result.snippet.title}</h3></div>
+    <img src="${result.snippet.thumbnails.medium.url}" alt="${result.snippet.title}" class="content-img">
+    <div class="content-details fadeIn-top">
+    <h3 class="result-title">${result.snippet.title}</h3>
+    </div>
+    </a>
     </div>
 </div>`
 }
@@ -385,10 +391,13 @@ function watchSubmit(){
         let cityQuery = $('#js-city').val().toLowerCase();
         const countryQuery = ($('#js-country').val());
         const originCountry = ($('#js-origin').val());
+        $('#js-country').val('');
+        $('#js-city').val('');
+        $('#js-origin').val('');
 
         const countryIdx = getCountryIdx(countryQuery);
         
-        $('#js-error').prop('hidden', true);
+        $('#js-error-msg').prop('hidden', true);
         $('#js-preview').prop('hidden', true);
 
         //show error to user if country can't be found
@@ -431,37 +440,4 @@ function watchSubmit(){
     });
 }
 
-//makes the html code for the embedded video link using iframe
-function renderEmbedLink(videoCode){
-    return `<iframe width="560" height="315" 
-    src="https://www.youtube.com/embed/${videoCode}" frameborder="0" 
-    allow="autoplay; encrypted-media" allowfullscreen></iframe>`
-}
-
-//makes modal visible or invisible
-function toggleModal(){
-    $('.modal').toggleClass('show-modal');
-}
-
-function watchModal(){
-    $('#js-video-tips').on('click', '.content', function(event){
-        event.preventDefault();
-        const videoImg = $(this).find('.trigger');
-        //get video title
-        const videoTitle = $(videoImg).attr('alt');
-        //passes the video id into renderEmbedLink
-        const embedLink = renderEmbedLink($(videoImg).attr('id'));
-        //insert the embedded link into the modal paragraph 
-        $('.video-player').html(embedLink).attr('aria-label',`Opened Video in Lightbox: ${videoTitle}`);
-        //make the modal visible
-        toggleModal();
-    });
-
-    $('.close-button').click(event => {
-        //make the modal hidden
-        toggleModal();
-    });
-}
-
 $(watchSubmit);
-$(watchModal);

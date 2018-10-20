@@ -39,7 +39,7 @@
             </div>
         </div>
         <!-- results scenario -->
-        <div id="js-results" hidden>
+        <div id="js-results" hidden aria-live="polite">
             <div id="small-results">
                 <section class="language" id="js-language" role="region">
                 </section>
@@ -58,14 +58,8 @@
             </section>
         </div>
         <!-- error scenario -->
-        <div class="error" id="js-error-msg" role="region" hidden>
+        <div class="error" id="js-error-msg" role="alert" hidden aria-atomic="true">
         </div>
-        <div class="modal">
-                <div class="modal-content">
-                    <button class="close-button" aria-label="Close Video Player">&times;</button>
-                    <div class="video-player" aria-live="assertive"></div>
-                </div>
-            </div>
     </main>
     <script src="codes.js"></script>
     <script src="currencyCodes.js"></script>
