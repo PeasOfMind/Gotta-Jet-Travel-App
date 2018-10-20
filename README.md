@@ -4,24 +4,25 @@ Test it out at: https://peasofmind.github.io/api-capstone/
 
 ## Screenshots
 
-Initial Search Page:
+### Initial Search Page:
+Has a short description about what the user will get upon submit.
 ![initial search page](images/initial-page.png)
 
-Results:
+### Results:
 Recommendations on language(s) to learn, currency conversion, time at destination,
 and a link to a website with visa recommendations for the destination country
 ![various results](images/various-results.png)
 
-Weather Forecast Results:
+### Weather Forecast Results:
 Forecast weather, probability of rain, and humidity for the next 7 days
 ![weather forecast](images/weather-forecast.png)
 
-Recommended Places:
+### Recommended Places:
 6 places in the destination city or country from different categories recommended
 to the user from Foursquare
 ![recommended places](images/recommended-places.png)
 
-Youtube Results:
+### Youtube Results:
 6 search results about travel tips in the destination city or country from Youtube.
 ![youtube results](images/youtube-results.png)
 
