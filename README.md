@@ -3,6 +3,7 @@ Enter in a destination and get some info to help you plan and prepare!
 Test it out at: https://peasofmind.github.io/api-capstone/
 
 ##Screenshots
+
 Initial Search Page:
 ![initial search page](images/initial-page.png)
 
@@ -25,6 +26,7 @@ Youtube Results:
 ![youtube results](images/youtube-results.png)
 
 ##Summary
+
 Gotta Jet seeks to provide useful information for travelers by consolidating 
 multiple travel resources in one place.
 
