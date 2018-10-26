@@ -58,7 +58,7 @@ function convertToCurrency(idx){
 }
 
 function formatString(cityQuery,countryQuery){
-    let combinedQuery = `${cityQuery}+${countryQuery}`;
+    let combinedQuery = `${cityQuery},+${countryQuery}`;
     combinedQuery = combinedQuery.split(' ').join('+');
     return combinedQuery;
 }
