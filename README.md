@@ -32,6 +32,7 @@ Gotta Jet seeks to provide useful information for travelers by consolidating
 multiple travel resources in one place.
 
 Built with: HTML, CSS, Javascript, and jQuery
+
 APIs used: Exchangeratesapi, Foursquare, Youtube, locationIQ, and Weatherbit
 
 ## Goals for Future Versions
